@@ -20,12 +20,26 @@ public class CommandAdmin extends AbstractCommand {
 	public boolean handle() {
 		AbstractCommand CommandObj = null;
 		if(nArgs > 1) {
-			if(args[1].toUpperCase().equals("LIST")) {
+			if(args[1].toUpperCase().equals("LIST"))
 				CommandObj = new CommandAdminList(_instance, player, label, args, nArgs);
-			}
-			if(args[1].toUpperCase().equals("INFO")) {
-				
-			}
+			if(args[1].toUpperCase().equals("INFO"))
+				CommandObj = new CommmandAdminInfo(_instance, player, label, args, nArgs);
+			if(args[1].toUpperCase().equals("CREATE"))
+				CommandObj = new CommandAdminCreate(_instance, player, label, args, nArgs);
+			if(args[1].toUpperCase().equals("REMOVE"))
+				CommandObj = new CommandAdminRemove(_instance, player, label, args, nArgs);
+			if(args[1].toUpperCase().equals("STATE"))
+				CommandObj = new CommandAdminState(_instance, player, label, args, nArgs);
+			if(args[1].toUpperCase().equals("SHEM"))
+				CommandObj = new CommandAdminSchem(_instance, player, label, args, nArgs);
+			if(args[1].toUpperCase().equals("SCHEMATIC"))
+				CommandObj = new CommandAdminSchem(_instance, player, label, args, nArgs);
+			if(args[1].toUpperCase().equals("HELP"))
+				CommandObj = new CommandAdminHelp(_instance, player, label, args, nArgs);
+			if(CommandObj == null)
+				CommandObj = new CommandAdminNull(_instance, player, label, args, nArgs);
+		}else {
+			CommandObj = new CommandAdminNull(_instance, player, label, args, nArgs);
 		}
 		
 		if(CommandObj != null) {
@@ -38,7 +52,8 @@ public class CommandAdmin extends AbstractCommand {
 				if(permission == null || player.hasPermission(permission._permission())) {
 					return CommandObj.handle();
 				}
-				return false;
+				player.sendMessage(ChatColor.RED + "You haven't permission to execute this command");
+				return true;
 			} catch (NoSuchMethodException | SecurityException e) {
 				e.printStackTrace();
 				player.sendMessage(ChatColor.RED + "An error occured while trying to perform command");
