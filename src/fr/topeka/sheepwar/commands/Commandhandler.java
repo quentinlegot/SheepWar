@@ -48,7 +48,8 @@ public class Commandhandler implements CommandExecutor {
 					if(permission == null || player.hasPermission(permission._permission())) {
 						return CommandObj.handle();
 					}
-					return false;
+					player.sendMessage(ChatColor.RED + "You haven't permission to execute this command");
+					return true;
 				} catch (NoSuchMethodException | SecurityException e) {
 					e.printStackTrace();
 					player.sendMessage(ChatColor.RED + "An error occured while trying to perform command");

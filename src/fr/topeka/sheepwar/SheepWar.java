@@ -12,8 +12,7 @@ import fr.topeka.sheepwar.commands.Commandhandler;
 import fr.topeka.sheepwar.listener.PlayerJoinLeaveListener;
 
 public class SheepWar extends JavaPlugin{
-
-	public List<Player> _playerList = new ArrayList<>();
+	
 	public List<Player> _playerOnLobby = new ArrayList<>();
 	public List<Arena> _arenaList = new ArrayList<>();
 	private SheepWar _instance = this;

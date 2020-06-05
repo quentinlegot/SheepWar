@@ -7,8 +7,8 @@ import org.bukkit.entity.Player;
 
 public class Arena {
 
-	public List<Player> playerInArena = new ArrayList<>();
-	public StateArena state = StateArena.WAITING;
+	public List<Player> _playerInArena = new ArrayList<>();
+	public StateArena _state = StateArena.WAITING;
 	
 	public Arena(StateArena state) {
 		this.state = state;
