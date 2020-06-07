@@ -27,6 +27,7 @@
   	<dependency>
   		<groupId>com.boydti.fawe</groupId>
   		<artifactId>FastAsyncWorldEdit</artifactId>
+  		<version>1.15-256</version>
   	</dependency>
   	<dependency>
   		<groupId>org.bukkit</groupId>
