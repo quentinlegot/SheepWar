@@ -37,24 +37,23 @@ public class CommandAdminSchem extends AbstractCommand {
 	@Override
 	public boolean handle() {
 		if(nArgs > 2) {
-			for(Arena a : _instance._arenaList) {
-				if(args[2].equalsIgnoreCase(a._Name)) {
-					try {
-						Region selection = _instance.WE.getSession(player).getSelection(BukkitAdapter.adapt(player.getWorld()));
-						if(selection instanceof CuboidRegion) {
-							CuboidRegion region = (CuboidRegion) selection;
-							BlockArrayClipboard clipboard = new BlockArrayClipboard(region);
-							EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitAdapter.adapt(player.getWorld()), -1);
-								ForwardExtentCopy forwardextendcopy = new ForwardExtentCopy(editSession, region, clipboard, region.getMinimumPoint());
-								Operations.complete(forwardextendcopy);
-								File file = new File(_instance.getDataFolder() + File.separator + a._Name + ".schem");
-								ClipboardWriter writer = BuiltInClipboardFormat.SPONGE_SCHEMATIC.getWriter(new FileOutputStream(file));
-								writer.write(clipboard);			
-						}
-					} catch (WorldEditException | IOException e) {
-						_instance.getLogger().warning(e.getMessage());
-						e.printStackTrace();
+			if(_instance._arenaList.containsKey(args[2])) {
+				Arena a = _instance._arenaList.get(args[2]);
+				try {
+					Region selection = _instance.WE.getSession(player).getSelection(BukkitAdapter.adapt(player.getWorld()));
+					if(selection instanceof CuboidRegion) {
+						CuboidRegion region = (CuboidRegion) selection;
+						BlockArrayClipboard clipboard = new BlockArrayClipboard(region);
+						EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitAdapter.adapt(player.getWorld()), -1);
+						ForwardExtentCopy forwardextendcopy = new ForwardExtentCopy(editSession, region, clipboard, region.getMinimumPoint());
+						Operations.complete(forwardextendcopy);
+						File file = new File(_instance.getDataFolder() + File.separator + a._Name + ".schem");
+						ClipboardWriter writer = BuiltInClipboardFormat.SPONGE_SCHEMATIC.getWriter(new FileOutputStream(file));
+						writer.write(clipboard);			
 					}
+				} catch (WorldEditException | IOException e) {
+					_instance.getLogger().warning(e.getMessage());
+					e.printStackTrace();
 				}
 			}
 		}
