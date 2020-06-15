@@ -28,10 +28,8 @@ public class PlayerJoinLeaveListener implements Listener {
 		if(_instance._playerOnLobby.contains(player)) {
 			_instance._playerOnLobby.remove(player);
 		}
-		for(Arena a : _instance._arenaList) {
-			if(a._playerInArena.contains(player)) {
-				a._playerInArena.remove(player);
-			}
+		for(Arena a : _instance._arenaList.values()) {
+			a.leaveArena(player);
 		}
 	}
 	
