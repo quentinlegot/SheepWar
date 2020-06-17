@@ -49,7 +49,7 @@ public class CommandAdminSchem extends AbstractCommand {
 						Operations.complete(forwardextendcopy);
 						File file = new File(_instance.getDataFolder() + File.separator + a._Name + ".schem");
 						ClipboardWriter writer = BuiltInClipboardFormat.SPONGE_SCHEMATIC.getWriter(new FileOutputStream(file));
-						writer.write(clipboard);			
+						writer.write(clipboard);
 					}
 				} catch (WorldEditException | IOException e) {
 					_instance.getLogger().warning(e.getMessage());

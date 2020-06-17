@@ -16,8 +16,17 @@ public class CommandAdminRemove extends AbstractCommand {
 	@Permission(_permission = "sheepwar.admin.remove")
 	@Override
 	public boolean handle() {
-		// TODO Auto-generated method stub
-		return false;
+		if(nArgs > 2) {
+			if(_instance._arenaList.containsKey(args[2])) {
+				_instance._arenaList.remove(args[2]);
+				return true;
+			}else {
+				player.sendMessage("Unable to found this named arena");
+				return true;
+			}
+		}
+		player.sendMessage("No enough arguments");
+		return true;
 	}
 
 }
