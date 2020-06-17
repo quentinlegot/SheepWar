@@ -6,18 +6,21 @@ import fr.topeka.sheepwar.SheepWar;
 import fr.topeka.sheepwar.commands.AbstractCommand;
 import fr.topeka.sheepwar.commands.Permission;
 
-public class CommmandAdminInfo extends AbstractCommand {
+public class CommandAdminList extends AbstractCommand {
 
-	public CommmandAdminInfo(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public CommandAdminList(SheepWar instance, Player player, String label, String[] args, int nArgs) {
 		super(instance, player, label, args, nArgs);
 		// TODO Auto-generated constructor stub
 	}
 
-	@Permission(_permission = "sheepwar.admin.info")
+	@Permission(_permission = "sheepwar.admin.list")
 	@Override
 	public boolean handle() {
-		// TODO Auto-generated method stub
-		return false;
+		player.sendMessage("Arena list: ");
+		for(String s : _instance._arenaList.keySet()) {
+			player.sendMessage(s);
+		}
+		return true;
 	}
 
 }

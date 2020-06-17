@@ -30,10 +30,10 @@ public class CommandAdmin extends AbstractCommand {
 				CommandObj = new CommandAdminRemove(_instance, player, label, args, nArgs);
 			if(args[1].toUpperCase().equals("STATE"))
 				CommandObj = new CommandAdminState(_instance, player, label, args, nArgs);
-			if(args[1].toUpperCase().equals("SHEM"))
+			if(args[1].toUpperCase().equals("SHEM") || args[1].toUpperCase().equals("SCHEMATIC"))
 				CommandObj = new CommandAdminSchem(_instance, player, label, args, nArgs);
-			if(args[1].toUpperCase().equals("SCHEMATIC"))
-				CommandObj = new CommandAdminSchem(_instance, player, label, args, nArgs);
+			if(args[1].toUpperCase().equals("SPAWN"))
+				CommandObj = new CommandAdminSpawn(_instance, player, label, args, nArgs);
 			if(args[1].toUpperCase().equals("HELP"))
 				CommandObj = new CommandAdminHelp(_instance, player, label, args, nArgs);
 			if(CommandObj == null)

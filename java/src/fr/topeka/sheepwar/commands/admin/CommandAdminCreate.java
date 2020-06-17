@@ -3,6 +3,7 @@ package fr.topeka.sheepwar.commands.admin;
 import org.bukkit.entity.Player;
 
 import fr.topeka.sheepwar.SheepWar;
+import fr.topeka.sheepwar.arena.Arena;
 import fr.topeka.sheepwar.commands.AbstractCommand;
 import fr.topeka.sheepwar.commands.Permission;
 
@@ -10,14 +11,22 @@ public class CommandAdminCreate extends AbstractCommand {
 
 	public CommandAdminCreate(SheepWar instance, Player player, String label, String[] args, int nArgs) {
 		super(instance, player, label, args, nArgs);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Permission(_permission = "sheepwar.admin.create")
 	@Override
 	public boolean handle() {
-		// TODO Auto-generated method stub
-		return false;
+		if(nArgs > 2) {
+			if(!_instance._arenaList.containsKey(args[2])) {
+				_instance._arenaList.put(args[2], new Arena(args[2]));
+				player.sendMessage("Arena " + args[2] + " created");
+				return true;
+			}
+			player.sendMessage("Arena " + args[2] + " already exist");
+			return true;
+		}
+		player.sendMessage("not enough arguments");
+		return true;
 	}
 
 }

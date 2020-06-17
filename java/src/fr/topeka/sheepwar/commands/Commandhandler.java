@@ -1,17 +1,19 @@
 package fr.topeka.sheepwar.commands;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import fr.topeka.sheepwar.SheepWar;
 import fr.topeka.sheepwar.commands.admin.CommandAdmin;
 
-public class Commandhandler implements CommandExecutor {
+public class Commandhandler implements CommandExecutor, TabCompleter {
 
 	private SheepWar _instance;
 
@@ -58,6 +60,12 @@ public class Commandhandler implements CommandExecutor {
 		}
 		sender.sendMessage("This is a player-only command");
 		return false;
+	}
+
+	@Override
+	public List<String> onTabComplete(CommandSender arg0, Command arg1, String arg2, String[] arg3) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

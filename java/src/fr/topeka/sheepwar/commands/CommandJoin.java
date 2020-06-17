@@ -14,10 +14,10 @@ public class CommandJoin extends AbstractCommand {
 	@Permission(_permission = "sheepwar.join")
 	@Override
 	public boolean handle() {
-		if(nArgs > 2) {
+		if(nArgs > 1) {
 			if(!_instance.playerInArena.containsKey(player)){
-				if(_instance._arenaList.containsKey(args[2].toLowerCase())) {
-					_instance._arenaList.get(args[2]).joinArena(player);
+				if(_instance._arenaList.containsKey(args[1].toLowerCase())) {
+					_instance._arenaList.get(args[1]).playerJoin(player);
 				}else {
 					player.sendMessage("Cannot found arena");
 				}
