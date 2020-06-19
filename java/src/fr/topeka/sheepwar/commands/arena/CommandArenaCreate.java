@@ -1,4 +1,4 @@
-package fr.topeka.sheepwar.commands.admin;
+package fr.topeka.sheepwar.commands.arena;
 
 import org.bukkit.entity.Player;
 
@@ -7,13 +7,13 @@ import fr.topeka.sheepwar.arena.Arena;
 import fr.topeka.sheepwar.commands.AbstractCommand;
 import fr.topeka.sheepwar.commands.Permission;
 
-public class CommandAdminCreate extends AbstractCommand {
+public class CommandArenaCreate extends AbstractCommand {
 
-	public CommandAdminCreate(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public CommandArenaCreate(SheepWar instance, Player player, String label, String[] args, int nArgs) {
 		super(instance, player, label, args, nArgs);
 	}
 
-	@Permission(_permission = "sheepwar.admin.create")
+	@Permission(_permission = "sheepwar.arena.create")
 	@Override
 	public boolean handle() {
 		if(nArgs > 2) {

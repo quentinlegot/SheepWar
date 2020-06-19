@@ -1,4 +1,4 @@
-package fr.topeka.sheepwar.commands.admin;
+package fr.topeka.sheepwar.commands.arena;
 
 import java.lang.reflect.Method;
 
@@ -9,9 +9,9 @@ import fr.topeka.sheepwar.SheepWar;
 import fr.topeka.sheepwar.commands.AbstractCommand;
 import fr.topeka.sheepwar.commands.Permission;
 
-public class CommandAdmin extends AbstractCommand {
+public class CommandArena extends AbstractCommand {
 
-	public CommandAdmin(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public CommandArena(SheepWar instance, Player player, String label, String[] args, int nArgs) {
 		super(instance, player, label, args, nArgs);
 		// TODO Auto-generated constructor stub
 	}
@@ -21,25 +21,23 @@ public class CommandAdmin extends AbstractCommand {
 		AbstractCommand CommandObj = null;
 		if(nArgs > 1) {
 			if(args[1].toUpperCase().equals("LIST"))
-				CommandObj = new CommandAdminList(_instance, player, label, args, nArgs);
+				CommandObj = new CommandArenaList(_instance, player, label, args, nArgs);
 			if(args[1].toUpperCase().equals("INFO"))
 				CommandObj = new CommmandAdminInfo(_instance, player, label, args, nArgs);
 			if(args[1].toUpperCase().equals("CREATE"))
-				CommandObj = new CommandAdminCreate(_instance, player, label, args, nArgs);
+				CommandObj = new CommandArenaCreate(_instance, player, label, args, nArgs);
 			if(args[1].toUpperCase().equals("REMOVE"))
-				CommandObj = new CommandAdminRemove(_instance, player, label, args, nArgs);
+				CommandObj = new CommandArenaRemove(_instance, player, label, args, nArgs);
 			if(args[1].toUpperCase().equals("STATE"))
-				CommandObj = new CommandAdminState(_instance, player, label, args, nArgs);
+				CommandObj = new CommandArenaState(_instance, player, label, args, nArgs);
 			if(args[1].toUpperCase().equals("SHEM") || args[1].toUpperCase().equals("SCHEMATIC"))
-				CommandObj = new CommandAdminSchem(_instance, player, label, args, nArgs);
+				CommandObj = new CommandArenaSchem(_instance, player, label, args, nArgs);
 			if(args[1].toUpperCase().equals("SPAWN"))
-				CommandObj = new CommandAdminSpawn(_instance, player, label, args, nArgs);
-			if(args[1].toUpperCase().equals("HELP"))
-				CommandObj = new CommandAdminHelp(_instance, player, label, args, nArgs);
-			if(CommandObj == null)
-				CommandObj = new CommandAdminNull(_instance, player, label, args, nArgs);
+				CommandObj = new CommandArenaSpawn(_instance, player, label, args, nArgs);
+			if(args[1].toUpperCase().equals("HELP") || CommandObj == null)
+				CommandObj = new CommandArenaHelp(_instance, player, label, args, nArgs);
 		}else {
-			CommandObj = new CommandAdminNull(_instance, player, label, args, nArgs);
+			CommandObj = new CommandArenaHelp(_instance, player, label, args, nArgs);
 		}
 		
 		if(CommandObj != null) {

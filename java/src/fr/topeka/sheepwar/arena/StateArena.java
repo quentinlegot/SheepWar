@@ -6,7 +6,8 @@ public enum StateArena {
 	STARTING("Starting..."),
 	PLAYING("In Game"),
 	FINISH("Game finished"),
-	MAINTENANCE("In maintenance");
+	MAINTENANCE("In maintenance"),
+	LOADING("Loading...");
 	
 	private String state;
 
