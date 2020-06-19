@@ -1,4 +1,4 @@
-package fr.topeka.sheepwar.commands.admin;
+package fr.topeka.sheepwar.commands.arena;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,14 +26,14 @@ import fr.topeka.sheepwar.commands.Permission;
  * 
  * @see https://worldedit.enginehub.org/en/latest/api/examples/clipboard/
  */
-public class CommandAdminSchem extends AbstractCommand {
+public class CommandArenaSchem extends AbstractCommand {
 
-	public CommandAdminSchem(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public CommandArenaSchem(SheepWar instance, Player player, String label, String[] args, int nArgs) {
 		super(instance, player, label, args, nArgs);
 		// TODO Auto-generated constructor stub
 	}
 
-	@Permission(_permission = "sheepwar.admin.schem")
+	@Permission(_permission = "sheepwar.arena.schem")
 	@Override
 	public boolean handle() {
 		if(nArgs > 2) {

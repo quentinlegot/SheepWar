@@ -1,4 +1,4 @@
-package fr.topeka.sheepwar.commands.admin;
+package fr.topeka.sheepwar.commands.arena;
 
 import org.bukkit.entity.Player;
 
@@ -14,7 +14,7 @@ public class CommmandAdminInfo extends AbstractCommand {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Permission(_permission = "sheepwar.admin.info")
+	@Permission(_permission = "sheepwar.arena.info")
 	@Override
 	public boolean handle() {
 		if(nArgs > 2) {

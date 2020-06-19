@@ -11,7 +11,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import fr.topeka.sheepwar.SheepWar;
-import fr.topeka.sheepwar.commands.admin.CommandAdmin;
+import fr.topeka.sheepwar.commands.arena.CommandArena;
 
 public class Commandhandler implements CommandExecutor, TabCompleter {
 
@@ -34,8 +34,8 @@ public class Commandhandler implements CommandExecutor, TabCompleter {
 				if(args[0].toUpperCase().equals("LEAVE")) {
 					CommandObj = new Commandleave(_instance, player, label, args, nArgs);
 				}
-				if(args[0].toUpperCase().equals("ADMIN")) {
-					CommandObj = new CommandAdmin(_instance, player, label, args, nArgs);
+				if(args[0].toUpperCase().equals("ARENA")) {
+					CommandObj = new CommandArena(_instance, player, label, args, nArgs);
 				}
 			}
 			
