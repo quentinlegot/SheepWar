@@ -1,5 +1,9 @@
 # SheepWar
 
+A plugin inspired by Epicube server (RIP).
+Plugin do no work, it's currently WIP and untested
+
+
 ## Commands
 
 /sheepwar or its alias /sw
@@ -20,34 +24,34 @@
 
 # Admin commands
 
-- /sw admin create <name>
-  - Permission: sheepwar.admin.create
+- /sw arena create <name>
+  - Permission: sheepwar.arena.create
   - Description: Create a new arena named <name> if it not exist
 
-- /sw admin remove <name>
-  - Permission: sheepwar.admin.remove
+- /sw arena remove <name>
+  - Permission: sheepwar.arena.remove
   - Description: remove the arena <name> if it exist
   
-- /sw admin list
-  - Permission: sheepwar.admin.list
+- /sw arena list
+  - Permission: sheepwar.arena.list
   - Description: List every arena
   
-- /sw admin info <name>
-  - Permission: sheepwar.admin.list
+- /sw arena info <name>
+  - Permission: sheepwar.arena.list
   - Description: display detailled information of arena <name>
   
-- /sw admin schem - /sw admin schematic
-  - Permission: sheepwar.admin.schem
+- /sw arena schem - /sw admin schematic
+  - Permission: sheepwar.arena.schem
   - Description: Save player worldedit selection of the arena as a .schem file to regenerate it after each game
  
-- /sw admin state <state> -- NOT IMPLEMENTED
-  - Permission: sheepwar.admin.state
+- /sw arena state <state> -- NOT IMPLEMENTED
+  - Permission: sheepwar.arena.state
   - Description: Force changing the state of an arena, <state> can only be WAITING or MAINTENANCE, game will pass through LOADING before
   
-- /sw admin spawn -- NOT IMPLEMENTED
-  - Permission: sheepwar.admin.spawn
+- /sw arena spawn -- NOT IMPLEMENTED
+  - Permission: sheepwar.arena.spawn
   
-- /sw admin help [page] - /sw admin -- WIP
-  - Permission: sheepwar.admin.help
+- /sw arena help [page] - /sw admin -- WIP
+  - Permission: sheepwar.arena.help
   - Description: Show help
  
