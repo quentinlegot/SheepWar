@@ -1,5 +1,6 @@
 package fr.topeka.sheepwar.commands.arena;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import fr.topeka.sheepwar.SheepWar;
@@ -20,12 +21,18 @@ public class CommmandAdminInfo extends AbstractCommand {
 		if(nArgs > 2) {
 			if(_instance._arenaList.containsKey(args[2])) {
 				Arena a = _instance._arenaList.get(args[2]);
-				player.sendMessage(a + "'s informations:");
-				player.sendMessage("Lobby Location: X=" + a.lobby.X + ", Y=" + a.lobby.Y + ", Z=" + a.lobby.Z + ", Yaw=" + a.lobby.Yaw + ", Pitch=" + a.lobby.Pitch);
+				player.sendMessage(a._Name + "'s informations:");
+				player.sendMessage("Lobby Location: "
+						+ "X=" + ChatColor.BLUE + a.lobby.X + ChatColor.RESET
+						+ ", Y=" + ChatColor.BLUE + a.lobby.Y + ChatColor.RESET
+						+ ", Z=" + ChatColor.BLUE + a.lobby.Z + ChatColor.RESET
+						+ ", Yaw=" + ChatColor.YELLOW + a.lobby.Yaw + ChatColor.RESET
+						+ ", Pitch=" + ChatColor.YELLOW + a.lobby.Pitch);
 				player.sendMessage("Current state: " + a._state.toString());
 				player.sendMessage("Player in Arena: " + a._playerInArena.size());
-				player.sendMessage("Numbers of spawn:" + a.spawns.size() + "/" + a._maxSize);
-				player.sendMessage("minimum players/maximum: " + a._minSize + "/" + a._maxSize);
+				player.sendMessage("Numbers of Red spawns: " + a.spawnsRed.size() +  "/" + a._maxSize / 2);
+				player.sendMessage("Numbers of Blue spawns:" + a.spawnsBlue.size() + "/" + a._maxSize / 2);
+				player.sendMessage("minimum / maximum players: " + a._minSize + "/" + a._maxSize);
 			}
 		}
 		return false;

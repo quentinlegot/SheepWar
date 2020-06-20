@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 
 import fr.topeka.sheepwar.SheepWar;
 import fr.topeka.sheepwar.arena.Arena;
+import fr.topeka.sheepwar.arena.StateArena;
 import fr.topeka.sheepwar.commands.AbstractCommand;
 import fr.topeka.sheepwar.commands.Permission;
 
@@ -18,7 +19,7 @@ public class CommandArenaCreate extends AbstractCommand {
 	public boolean handle() {
 		if(nArgs > 2) {
 			if(!_instance._arenaList.containsKey(args[2])) {
-				_instance._arenaList.put(args[2], new Arena(args[2]));
+				_instance._arenaList.put(args[2], new Arena(args[2], StateArena.MAINTENANCE));
 				player.sendMessage("Arena " + args[2] + " created");
 				return true;
 			}

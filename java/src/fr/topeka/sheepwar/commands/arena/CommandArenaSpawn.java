@@ -16,6 +16,9 @@ public class CommandArenaSpawn extends AbstractCommand {
 	@Override
 	public boolean handle() {
 		// TODO Auto-generated method stub
+		// /sw arena spawn <arena_name> add <team>
+		// /sw arena spawn <arena_name> list
+		// /sw arena spawn <arena_name> remove <team> <number>
 		return false;
 	}
 

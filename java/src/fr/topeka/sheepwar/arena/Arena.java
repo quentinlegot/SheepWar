@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -26,7 +24,7 @@ public class Arena {
 	public SpawnLocation lobby;
 	public StateArena _state = StateArena.MAINTENANCE;
 	public int _minSize = 2;
-	public int _maxSize = 20;
+	public int _maxSize = 10;
 	public int timeBeforeStart = 10;
 	public int timeBeforeQuit = 5;
 	public int gameDuration = 300;
