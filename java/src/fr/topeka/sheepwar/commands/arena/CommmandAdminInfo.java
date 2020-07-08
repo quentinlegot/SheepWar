@@ -28,10 +28,16 @@ public class CommmandAdminInfo extends AbstractCommand {
 						+ ", Z=" + ChatColor.BLUE + a.lobby.Z + ChatColor.RESET
 						+ ", Yaw=" + ChatColor.YELLOW + a.lobby.Yaw + ChatColor.RESET
 						+ ", Pitch=" + ChatColor.YELLOW + a.lobby.Pitch);
+				if(a.world != null) {
+					player.sendMessage("Schem minimun position: "
+							+ "X=" + ChatColor.BLUE + a.x + ChatColor.RESET
+							+ ", Y=" + ChatColor.BLUE + a.y + ChatColor.RESET
+							+ ", Z=" + ChatColor.BLUE + a.z);
+				}
 				player.sendMessage("Current state: " + a._state.toString());
 				player.sendMessage("Player in Arena: " + a._playerInArena.size());
 				player.sendMessage("Numbers of Red spawns: " + a.spawnsRed.size() +  "/" + a._maxSize / 2);
-				player.sendMessage("Numbers of Blue spawns:" + a.spawnsBlue.size() + "/" + a._maxSize / 2);
+				player.sendMessage("Numbers of Blue spawns: " + a.spawnsBlue.size() + "/" + a._maxSize / 2);
 				player.sendMessage("minimum / maximum players: " + a._minSize + "/" + a._maxSize);
 			}
 		}
