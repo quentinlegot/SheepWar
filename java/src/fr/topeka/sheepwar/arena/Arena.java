@@ -1,12 +1,29 @@
 package fr.topeka.sheepwar.arena;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.WorldEditException;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.extent.clipboard.Clipboard;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
+import com.sk89q.worldedit.function.operation.Operation;
+import com.sk89q.worldedit.function.operation.Operations;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.session.ClipboardHolder;
 
 import fr.topeka.sheepwar.SheepWar;
 import fr.topeka.sheepwar.task.LaunchingGameTask;
@@ -18,8 +35,8 @@ public class Arena {
 	public HashMap<Player, Team> _playerTeam = new HashMap<>();
 	public HashMap<Player, ItemStack[]> _playerInventory = new HashMap<>();
 	public HashMap<Player, ItemStack[]> _playerArmor = new HashMap<>();
-	public List<SpawnLocation> spawnsRed;
-	public List<SpawnLocation> spawnsBlue;
+	public List<SpawnLocation> spawnsRed = new ArrayList<>();
+	public List<SpawnLocation> spawnsBlue = new ArrayList<>();
 	public HashMap<String, Team> teams = new HashMap<>();
 	public SpawnLocation lobby;
 	public StateArena _state = StateArena.MAINTENANCE;
@@ -29,6 +46,8 @@ public class Arena {
 	public int timeBeforeQuit = 5;
 	public int gameDuration = 300;
 	public String _Name;
+	public String world = null;
+	public double x, y, z;
 	
 	public Arena(String name, StateArena state) {
 		this._Name = name;
@@ -48,6 +67,10 @@ public class Arena {
 		player.teleport(lobby.toLocation());
 		startGame();
 		return true;
+	}
+	
+	public void setLobbyLocation(Location location) {
+		lobby = new SpawnLocation(location);
 	}
 	
 	public void playerLeave(Player player) {
@@ -121,6 +144,7 @@ public class Arena {
 		for(Player p : _playerInArena.keySet()) {
 			playerLeave(p);
 		}
+		regenArena();
 	}
 	
 	public void startGame() {
@@ -148,11 +172,32 @@ public class Arena {
 		}
 	}
 	
-	@SuppressWarnings("unused")
 	private void regenArena() {
 		setState(StateArena.LOADING);
-		// TODO Auto-generated method stub
-		
+		Clipboard clipboard;
+		System.out.println(SheepWar.getInstance().getDataFolder().getAbsolutePath() + File.separator + _Name + ".schem");
+		File file = new File(SheepWar.getInstance().getDataFolder().getAbsolutePath() + File.separator + _Name + ".schem");
+		if(file.exists()) {
+			ClipboardFormat format = ClipboardFormats.findByFile(file);
+			
+			if(format != null) {
+				try (ClipboardReader reader = format.getReader(new FileInputStream(file))) {
+				    clipboard = reader.read();
+				    EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitAdapter.adapt(Bukkit.getWorld(world)), -1);
+				       Operation operation = new ClipboardHolder(clipboard)
+				    		   .createPaste(editSession)
+				    		   .to(BlockVector3.at(x, y, z))
+				    		   .ignoreAirBlocks(false)
+				                // configure here
+				    		   .build();
+				        Operations.complete(operation);
+				} catch (IOException | WorldEditException e) {
+					e.printStackTrace();
+				}
+			}else {
+				SheepWar.getInstance().getLogger().warning("ClipboardFormat null");
+			}
+		}
 	}
 	public void cancelledGame() {
 		setState(StateArena.WAITING);
@@ -175,9 +220,12 @@ public class Arena {
 	
 	public boolean setState(StateArena state) {
 		if(state == StateArena.WAITING) {
-			if(spawnsBlue.size() > 0 && spawnsRed.size() > 0) {
+			if(spawnsBlue.size() == 0 && spawnsRed.size() == 0) {
 				return false;
 			}
+		}
+		if(state == StateArena.WAITING || state == StateArena.MAINTENANCE) {
+			regenArena();
 		}
 		_state = state;
 		return true;

@@ -57,6 +57,7 @@ public class Commandhandler implements CommandExecutor, TabCompleter {
 					player.sendMessage(ChatColor.RED + "An error occured while trying to perform command");
 				}
 			}
+			return false;
 		}
 		sender.sendMessage("This is a player-only command");
 		return false;

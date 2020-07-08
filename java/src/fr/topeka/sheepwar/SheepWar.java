@@ -30,6 +30,7 @@ public class SheepWar extends JavaPlugin{
 	
 	@Override
 	public void onEnable() {
+		saveDefaultConfig();
 		_instance = this;
 		WE = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
 		Commandhandler Commandhandler = new Commandhandler(_instance);

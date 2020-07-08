@@ -13,7 +13,6 @@ public class CommandArena extends AbstractCommand {
 
 	public CommandArena(SheepWar instance, Player player, String label, String[] args, int nArgs) {
 		super(instance, player, label, args, nArgs);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -26,11 +25,11 @@ public class CommandArena extends AbstractCommand {
 				CommandObj = new CommmandAdminInfo(_instance, player, label, args, nArgs);
 			if(args[1].toUpperCase().equals("CREATE"))
 				CommandObj = new CommandArenaCreate(_instance, player, label, args, nArgs);
-			if(args[1].toUpperCase().equals("REMOVE"))
+			if(args[1].toUpperCase().equals("REMOVE") || args[1].toUpperCase().equals("DELETE"))
 				CommandObj = new CommandArenaRemove(_instance, player, label, args, nArgs);
 			if(args[1].toUpperCase().equals("STATE"))
 				CommandObj = new CommandArenaState(_instance, player, label, args, nArgs);
-			if(args[1].toUpperCase().equals("SHEM") || args[1].toUpperCase().equals("SCHEMATIC"))
+			if(args[1].toUpperCase().equals("SCHEM") || args[1].toUpperCase().equals("SCHEMATIC"))
 				CommandObj = new CommandArenaSchem(_instance, player, label, args, nArgs);
 			if(args[1].toUpperCase().equals("SPAWN"))
 				CommandObj = new CommandArenaSpawn(_instance, player, label, args, nArgs);

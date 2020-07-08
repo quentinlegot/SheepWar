@@ -20,6 +20,7 @@ public class CommandArenaCreate extends AbstractCommand {
 		if(nArgs > 2) {
 			if(!_instance._arenaList.containsKey(args[2])) {
 				_instance._arenaList.put(args[2], new Arena(args[2], StateArena.MAINTENANCE));
+				_instance._arenaList.get(args[2]).setLobbyLocation(player.getLocation());
 				player.sendMessage("Arena " + args[2] + " created");
 				return true;
 			}

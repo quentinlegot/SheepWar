@@ -22,11 +22,18 @@ public class CommandArenaState extends AbstractCommand {
 			if(_instance._arenaList.containsKey(args[2])) {
 				Arena a = _instance._arenaList.get(args[2]);
 				if(args[3].toUpperCase().equals("MAINTENANCE")) {
-					a._state = StateArena.MAINTENANCE;
-					player.sendMessage(a._Name + "'s state as been set to MAINTENANCE");
+					if(a.setState(StateArena.MAINTENANCE)) {
+						player.sendMessage(a._Name + "'s state as been set to MAINTENANCE");
+					}else {
+						player.sendMessage("error");
+					}
 				}else if(args[3].toUpperCase().equals("WAITING")) {
-					a._state = StateArena.WAITING;
-					player.sendMessage(a._Name + "'s state as been set to WAITING");
+					if(a.setState(StateArena.WAITING)) {
+						player.sendMessage(a._Name + "'s state as been set to WAITING");
+					}else {
+						player.sendMessage("error");
+					}
+					
 				} else {
 					player.sendMessage("Possible value are MAINTENANCE or WAITING");
 				}
