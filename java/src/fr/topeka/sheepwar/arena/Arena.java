@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -46,7 +46,7 @@ public class Arena {
 	public int timeBeforeQuit = 5;
 	public int gameDuration = 300;
 	public String _Name;
-	public String world = null;
+	public World world = null;
 	public double x, y, z;
 	
 	public Arena(String name, StateArena state) {
@@ -182,7 +182,7 @@ public class Arena {
 			if(format != null) {
 				try (ClipboardReader reader = format.getReader(new FileInputStream(file))) {
 				    clipboard = reader.read();
-				    try(EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitAdapter.adapt(Bukkit.getWorld(world)), -1)){
+				    try(EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitAdapter.adapt(world), -1)){
 				    	Operation operation = new ClipboardHolder(clipboard)
 					    		   .createPaste(editSession)
 					    		   .to(BlockVector3.at(x, y, z))

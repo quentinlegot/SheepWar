@@ -29,7 +29,9 @@ public class PlayerJoinLeaveListener implements Listener {
 			_instance._playerOnLobby.remove(player);
 		}
 		for(Arena a : _instance._arenaList.values()) {
-			a.playerLeave(player);
+			if(a._playerInArena.containsKey(player)) {
+				a.playerLeave(player);
+			}
 		}
 	}
 	
