@@ -179,19 +179,22 @@ public class Arena {
 		File file = new File(SheepWar.getInstance().getDataFolder().getAbsolutePath() + File.separator + _Name + ".schem");
 		if(file.exists()) {
 			ClipboardFormat format = ClipboardFormats.findByFile(file);
-			
 			if(format != null) {
 				try (ClipboardReader reader = format.getReader(new FileInputStream(file))) {
 				    clipboard = reader.read();
-				    EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitAdapter.adapt(Bukkit.getWorld(world)), -1);
-				       Operation operation = new ClipboardHolder(clipboard)
-				    		   .createPaste(editSession)
-				    		   .to(BlockVector3.at(x, y, z))
-				    		   .ignoreAirBlocks(false)
-				                // configure here
-				    		   .build();
-				        Operations.complete(operation);
-				} catch (IOException | WorldEditException e) {
+				    try(EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitAdapter.adapt(Bukkit.getWorld(world)), -1)){
+				    	Operation operation = new ClipboardHolder(clipboard)
+					    		   .createPaste(editSession)
+					    		   .to(BlockVector3.at(x, y, z))
+					    		   .ignoreAirBlocks(false)
+					    		   .copyEntities(false)
+					                // configure here
+					    		   .build();
+					        Operations.complete(operation);
+					        System.out.println("Operation complete");
+					        return;
+				    }
+				}catch (IOException | WorldEditException e) {
 					e.printStackTrace();
 				}
 			}else {
