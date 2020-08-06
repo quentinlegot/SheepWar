@@ -57,7 +57,7 @@ public class CommandArenaSchem extends AbstractCommand {
 							file.createNewFile();
 							try(ClipboardWriter writer = BuiltInClipboardFormat.SPONGE_SCHEMATIC.getWriter(new FileOutputStream(file))){
 								writer.write(clipboard);
-								a.world = editSession.getWorld().getName();
+								a.world = BukkitAdapter.adapt(editSession.getWorld());
 									
 								a.x = region.getMinimumPoint().getX();
 								a.y = region.getMinimumPoint().getY();
