@@ -60,7 +60,7 @@ public class Commandhandler implements CommandExecutor, TabCompleter {
 			return false;
 		}
 		sender.sendMessage("This is a player-only command");
-		return false;
+		return true;
 	}
 
 	@Override

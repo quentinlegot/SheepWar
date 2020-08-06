@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.WorldEditException;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.extent.clipboard.BlockArrayClipboard;
 import com.sk89q.worldedit.extent.clipboard.io.BuiltInClipboardFormat;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardWriter;
@@ -39,34 +40,47 @@ public class CommandArenaSchem extends AbstractCommand {
 			if(_instance._arenaList.containsKey(args[2])) {
 				Arena a = _instance._arenaList.get(args[2]);
 				try {
-					Region selection = _instance.WE.getSession(player).getSelection(_instance.WE.getSession(player).getSelectionWorld());
-					if(selection instanceof CuboidRegion) {
-						CuboidRegion region = (CuboidRegion) selection;
-						BlockArrayClipboard clipboard = new BlockArrayClipboard(region);
-						
-						try(EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(region.getWorld(), -1)){
+					if(_instance.WE.getSession(player).isSelectionDefined(BukkitAdapter.adapt(player.getWorld()))) {
+						Region selection = _instance.WE.getSession(player).getSelection(_instance.WE.getSession(player).getSelectionWorld());
+						if(selection instanceof CuboidRegion) {
+							CuboidRegion region = (CuboidRegion) selection;
+							BlockArrayClipboard clipboard = new BlockArrayClipboard(region);
+							
+							EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(region.getWorld(), -1);
+							
 							ForwardExtentCopy forwardextendcopy = new ForwardExtentCopy(
-									editSession, region, clipboard, region.getPos1()
+									editSession, region, clipboard, region.getMinimumPoint()
 									);
+							forwardextendcopy.setCopyingEntities(false);
 							Operations.complete(forwardextendcopy);
 							File file = new File(_instance.getDataFolder().getAbsolutePath() + File.separator + a._Name + ".schem");
 							file.createNewFile();
 							try(ClipboardWriter writer = BuiltInClipboardFormat.SPONGE_SCHEMATIC.getWriter(new FileOutputStream(file))){
 								writer.write(clipboard);
 								a.world = editSession.getWorld().getName();
-								
-								a.x = region.getPos2().getX();
-								a.y = region.getPos2().getY();
-								a.z = region.getPos2().getZ();
+									
+								a.x = region.getMinimumPoint().getX();
+								a.y = region.getMinimumPoint().getY();
+								a.z = region.getMinimumPoint().getZ();
+								player.sendMessage("Schematic saved");
+								return true;
 							}
+						}else {
+							player.sendMessage("Your selection need to be cuboid");
+							return false;
 						}
+					}else {
+						player.sendMessage("You have no selection");
+						return false;
 					}
 				}catch(WorldEditException | IOException e) {
 					e.printStackTrace();
+					return false;
 				}
 			}
 		}
 		return false;
 	}
+	
 
 }
