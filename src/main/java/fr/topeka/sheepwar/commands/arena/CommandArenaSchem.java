@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import fr.topeka.sheepwar.arena.Arena;
 import org.bukkit.entity.Player;
 
 import com.sk89q.worldedit.EditSession;
@@ -19,7 +20,6 @@ import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 
 import fr.topeka.sheepwar.SheepWar;
-import fr.topeka.sheepwar.arena.Arena;
 import fr.topeka.sheepwar.commands.AbstractCommand;
 import fr.topeka.sheepwar.commands.Permission;
 /**

@@ -3,6 +3,7 @@ package fr.topeka.sheepwar.commands;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import fr.topeka.sheepwar.commands.arena.CommandArena;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,7 +12,6 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import fr.topeka.sheepwar.SheepWar;
-import fr.topeka.sheepwar.commands.arena.CommandArena;
 
 public class Commandhandler implements CommandExecutor, TabCompleter {
 

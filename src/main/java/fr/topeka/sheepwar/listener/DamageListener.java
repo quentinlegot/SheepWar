@@ -1,12 +1,12 @@
 package fr.topeka.sheepwar.listener;
 
+import fr.topeka.sheepwar.arena.Arena;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import fr.topeka.sheepwar.SheepWar;
-import fr.topeka.sheepwar.arena.Arena;
 
 public class DamageListener implements Listener{
 

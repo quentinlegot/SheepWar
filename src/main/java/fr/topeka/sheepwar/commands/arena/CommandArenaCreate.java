@@ -1,9 +1,9 @@
 package fr.topeka.sheepwar.commands.arena;
 
+import fr.topeka.sheepwar.arena.Arena;
 import org.bukkit.entity.Player;
 
 import fr.topeka.sheepwar.SheepWar;
-import fr.topeka.sheepwar.arena.Arena;
 import fr.topeka.sheepwar.arena.StateArena;
 import fr.topeka.sheepwar.commands.AbstractCommand;
 import fr.topeka.sheepwar.commands.Permission;
