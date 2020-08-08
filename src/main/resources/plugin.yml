@@ -1,5 +1,5 @@
 name: SheepWar
-main: fr.topeka.sheepwar.SheepWar
+main: java.fr.topeka.sheepwar.SheepWar
 version: 1.0
 author: Topeka_
 api-version: 1.14

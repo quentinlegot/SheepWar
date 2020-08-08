@@ -1,10 +1,9 @@
 package fr.topeka.sheepwar.task;
 
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import fr.topeka.sheepwar.arena.Arena;
 import fr.topeka.sheepwar.arena.StateArena;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class LaunchingGameTask extends BukkitRunnable {
 

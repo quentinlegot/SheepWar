@@ -3,3 +3,6 @@
 .project
 /target/
 .settings/
+.idea/
+SheepWar.eml
+SheepWar.iml
