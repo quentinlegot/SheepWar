@@ -22,6 +22,6 @@ public abstract class AbstractCommand {
 	
 	public abstract boolean handle();
 	
-	
+	public abstract void commandUsage();
 	
 }

@@ -27,6 +27,15 @@ public class Team {
 		return false;
 	}
 	
+	public boolean removeSpawn(int index) {
+		try {
+			spawns.remove(index);
+			return true;
+		} catch (UnsupportedOperationException | IndexOutOfBoundsException  e) {
+			return false;
+		}
+	}
+	
 	public void removePlayer(Player p) {
 		if(_players.contains(p))
 			_players.remove(p);

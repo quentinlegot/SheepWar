@@ -46,4 +46,10 @@ public class CommandArenaState extends AbstractCommand {
 		return true;
 	}
 
+	@Override
+	public void commandUsage() {
+		player.sendMessage("/sw arena state <MAINTENANCE/WAITING>");
+		
+	}
+
 }

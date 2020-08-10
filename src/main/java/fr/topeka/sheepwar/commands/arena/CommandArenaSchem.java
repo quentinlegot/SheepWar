@@ -81,6 +81,12 @@ public class CommandArenaSchem extends AbstractCommand {
 		}
 		return false;
 	}
+
+	@Override
+	public void commandUsage() {
+		player.sendMessage("/sw arena schem <arena_name>");
+		
+	}
 	
 
 }

@@ -19,7 +19,7 @@ public class CommandArenaCreate extends AbstractCommand {
 	public boolean handle() {
 		if(nArgs > 2) {
 			if(!_instance._arenaList.containsKey(args[2])) {
-				_instance._arenaList.put(args[2], new Arena(args[2], StateArena.MAINTENANCE));
+				_instance._arenaList.put(args[2], new Arena(_instance, args[2], StateArena.MAINTENANCE));
 				_instance._arenaList.get(args[2]).setLobbyLocation(player.getLocation());
 				player.sendMessage("Arena " + args[2] + " created");
 				return true;
@@ -29,6 +29,12 @@ public class CommandArenaCreate extends AbstractCommand {
 		}
 		player.sendMessage("not enough arguments");
 		return true;
+	}
+
+	@Override
+	public void commandUsage() {
+		player.sendMessage("/sw arena create <arena_name>");
+		
 	}
 
 }

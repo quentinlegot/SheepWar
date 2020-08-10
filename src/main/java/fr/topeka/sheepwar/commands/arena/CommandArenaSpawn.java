@@ -49,8 +49,22 @@ public class CommandArenaSpawn extends AbstractCommand {
 					}
 					return true;
 				case "remove":
-					break;
+					if(arena.teams.containsKey(args[3])) {
+						if(nArgs > 4 && SheepWar.isInteger(args[4])) {
+							if(arena.teams.get(args[3]).removeSpawn(Integer.parseInt(args[4]))) {
+								player.sendMessage("spawn deleted");
+								return true;
+							}
+							player.sendMessage("spawn index doesn't exist");
+							return false;
+						}
+						player.sendMessage("Not enough arguments or argument 5 isn't a integer");
+						return false;
+					}
+					player.sendMessage("Team " + args[3] + " doesn't exist");
+					return false;
 				default:
+					commandUsage();
 					break;
 				}
 				return false;
@@ -60,6 +74,12 @@ public class CommandArenaSpawn extends AbstractCommand {
 		}
 		player.sendMessage("Not enough arguments");
 		return false;
+	}
+
+	@Override
+	public void commandUsage() {
+		player.sendMessage("/sw arena spawn <arena_name> <add/remove/list> [team] [integer]");
+		
 	}
 
 }
