@@ -35,8 +35,6 @@ public class Arena {
 	public HashMap<Player, Team> _playerTeam = new HashMap<>();
 	public HashMap<Player, ItemStack[]> _playerInventory = new HashMap<>();
 	public HashMap<Player, ItemStack[]> _playerArmor = new HashMap<>();
-	public List<SpawnLocation> spawnsRed = new ArrayList<>();
-	public List<SpawnLocation> spawnsBlue = new ArrayList<>();
 	public HashMap<String, Team> teams = new HashMap<>();
 	public SpawnLocation lobby;
 	public StateArena _state = StateArena.MAINTENANCE;
@@ -52,8 +50,8 @@ public class Arena {
 	public Arena(String name, StateArena state) {
 		this._Name = name;
 		this._state = state;
-		teams.put("RED", new Team("RED"));
-		teams.put("BLUE", new Team("BLUE"));
+		teams.put("RED", new Team("RED", this));
+		teams.put("BLUE", new Team("BLUE", this));
 	}
 
 	public boolean playerJoin(Player player) {
@@ -223,8 +221,10 @@ public class Arena {
 	
 	public boolean setState(StateArena state) {
 		if(state == StateArena.WAITING) {
-			if(spawnsBlue.size() == 0 && spawnsRed.size() == 0) {
-				return false;
+			for(Team team : teams.values()) {
+				if(team.spawns.size() == 0) {
+					return false;
+				}
 			}
 		}
 		if(state == StateArena.WAITING || state == StateArena.MAINTENANCE) {
