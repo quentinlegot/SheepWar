@@ -44,7 +44,7 @@ public class CommandArenaSchem extends AbstractCommand {
 		if(nArgs > 2) {
 			if(_instance._arenaList.containsKey(args[2])) {
 				Arena a = _instance._arenaList.get(args[2]);
-				IPlayerEntry awePlayer = _instance.playerManager.getPlayer(player.getUniqueId());
+				IPlayerEntry awePlayer = _instance.playerManager.getConsolePlayer();
 				com.sk89q.worldedit.world.World world = BukkitAdapter.adapt(player.getWorld());
 				int maxBlocks = -1; // can be -1
 				BlockBag bb = null; // can be null
@@ -56,7 +56,7 @@ public class CommandArenaSchem extends AbstractCommand {
 							CuboidRegion region = (CuboidRegion) selection;
 							BlockArrayClipboard clipboard = new BlockArrayClipboard(region);
 							
-							_instance.blockPlacer.performAsAsyncJob(es, awePlayer, "", new IFuncParamEx<Integer, ICancelabeEditSession, MaxChangedBlocksException>() {
+							_instance.blockPlacer.performAsAsyncJob(es, awePlayer, "toSchem" + a._Name, new IFuncParamEx<Integer, ICancelabeEditSession, MaxChangedBlocksException>() {
 								@Override
 								public Integer execute(ICancelabeEditSession editSession) throws MaxChangedBlocksException{
 									ForwardExtentCopy forwardextendcopy = new ForwardExtentCopy(

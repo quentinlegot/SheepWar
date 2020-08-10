@@ -17,7 +17,6 @@ import org.primesoft.asyncworldedit.api.worldedit.ICancelabeEditSession;
 import org.primesoft.asyncworldedit.api.worldedit.IThreadSafeEditSession;
 
 import com.sk89q.worldedit.MaxChangedBlocksException;
-import com.sk89q.worldedit.WorldEditException;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
@@ -40,7 +39,7 @@ public class Arena {
 	public HashMap<Player, ItemStack[]> _playerInventory = new HashMap<>();
 	public HashMap<Player, ItemStack[]> _playerArmor = new HashMap<>();
 	public HashMap<String, Team> teams = new HashMap<>();
-	public SpawnLocation lobby;
+	public SpawnLocation lobby = null;
 	public StateArena _state = StateArena.MAINTENANCE;
 	public int _minSize = 2;
 	public int _maxSize = 10;
@@ -61,7 +60,7 @@ public class Arena {
 	}
 
 	public boolean playerJoin(Player player) {
-		if(!(_state == StateArena.WAITING || _state == StateArena.STARTING) && (_playerInArena.size() >= _maxSize || _playerInArena.containsKey(player)))
+		if(!(_state == StateArena.WAITING || _state == StateArena.STARTING) || _playerInArena.size() >= _maxSize || _playerInArena.containsKey(player))
 			return false;
 		_playerInArena.put(player, player.getLocation());
 		_playerInventory.put(player, player.getInventory().getContents());
@@ -189,7 +188,7 @@ public class Arena {
 				BlockBag bb = null; // can be null
 				IThreadSafeEditSession es = _instance.esFactory.getThreadSafeEditSession(world, maxBlocks, bb, awePlayer);
 
-				_instance.blockPlacer.performAsAsyncJob(es, awePlayer, "", new IFuncParamEx<Integer, ICancelabeEditSession, MaxChangedBlocksException>() {
+				_instance.blockPlacer.performAsAsyncJob(es, awePlayer, "regen" + _Name, new IFuncParamEx<Integer, ICancelabeEditSession, MaxChangedBlocksException>() {
 					@Override
 					public Integer execute(ICancelabeEditSession editSession) throws MaxChangedBlocksException{
 						Clipboard clipboard;
@@ -201,18 +200,20 @@ public class Arena {
 									.ignoreAirBlocks(false)
 									.copyEntities(false)
 									.build();
-							Operations.complete(operation);
+							Operations.completeBlindly(operation);
 							System.out.println("Operation complete");
 							_state = stateWhenRegenered;
 							return 0;
-						} catch (IOException | WorldEditException e) {
+						} catch (IOException e) {
 							e.printStackTrace();
 							return 1;
 						}
 					}
 				});
+				
 			}
 		}
+		
 	}
 	
 	public void cancelledGame() {
@@ -236,6 +237,8 @@ public class Arena {
 	
 	public boolean setState(StateArena state) {
 		if(state == StateArena.WAITING) {
+			if(lobby == null)
+				return false;
 			for(Team team : teams.values()) {
 				if(team.spawns.size() == 0) {
 					return false;

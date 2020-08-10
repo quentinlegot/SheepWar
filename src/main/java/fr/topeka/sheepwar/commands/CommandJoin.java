@@ -17,13 +17,19 @@ public class CommandJoin extends AbstractCommand {
 		if(nArgs > 1) {
 			if(!_instance.playerInArena.containsKey(player)){
 				if(_instance._arenaList.containsKey(args[1].toLowerCase())) {
-					_instance._arenaList.get(args[1]).playerJoin(player);
-				}else {
-					player.sendMessage("Cannot found arena");
+					if(_instance._arenaList.get(args[1]).playerJoin(player)) {
+						return true;
+					}
+					player.sendMessage("Arena is unavailable");
+					return false;
 				}
+				player.sendMessage("Cannot found arena");
+				return false;
 			}
-			
+			player.sendMessage("You're already playing in an arena");
+			return false;
 		}
+		player.sendMessage("Not enough arguments");
 		return false;
 	}
 
