@@ -7,20 +7,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.primesoft.asyncworldedit.api.playerManager.IPlayerEntry;
+import org.primesoft.asyncworldedit.api.utils.IFuncParamEx;
+import org.primesoft.asyncworldedit.api.worldedit.ICancelabeEditSession;
+import org.primesoft.asyncworldedit.api.worldedit.IThreadSafeEditSession;
 
-import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.WorldEditException;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
+import com.sk89q.worldedit.extent.inventory.BlockBag;
 import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
@@ -175,40 +178,43 @@ public class Arena {
 	
 	private void regenArena(StateArena stateWhenRegenered) {
 		_state = StateArena.LOADING;
-		Bukkit.getScheduler().runTaskAsynchronously(_instance, new Runnable() {
-			@Override
-			public void run() {
-				Clipboard clipboard;
-				System.out.println(SheepWar.getInstance().getDataFolder().getAbsolutePath() + File.separator + _Name + ".schem");
-				File file = new File(SheepWar.getInstance().getDataFolder().getAbsolutePath() + File.separator + _Name + ".schem");
-				if(file.exists()) {
-					ClipboardFormat format = ClipboardFormats.findByFile(file);
-					if(format != null) {
+		IPlayerEntry awePlayer = _instance.playerManager.getConsolePlayer();
+		System.out.println(SheepWar.getInstance().getDataFolder().getAbsolutePath() + File.separator + _Name + ".schem");
+		File file = new File(SheepWar.getInstance().getDataFolder().getAbsolutePath() + File.separator + _Name + ".schem");
+		if(file.exists()) {
+			ClipboardFormat format = ClipboardFormats.findByFile(file);
+			if(format != null) {
+				com.sk89q.worldedit.world.World world = BukkitAdapter.adapt(this.world);
+				int maxBlocks = -1; // can be -1
+				BlockBag bb = null; // can be null
+				IThreadSafeEditSession es = _instance.esFactory.getThreadSafeEditSession(world, maxBlocks, bb, awePlayer);
+
+				_instance.blockPlacer.performAsAsyncJob(es, awePlayer, "", new IFuncParamEx<Integer, ICancelabeEditSession, MaxChangedBlocksException>() {
+					@Override
+					public Integer execute(ICancelabeEditSession editSession) throws MaxChangedBlocksException{
+						Clipboard clipboard;
 						try (ClipboardReader reader = format.getReader(new FileInputStream(file))) {
-						    clipboard = reader.read();
-						    try(EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitAdapter.adapt(world), -1)){
-						    	Operation operation = new ClipboardHolder(clipboard)
-							    		   .createPaste(editSession)
-							    		   .to(BlockVector3.at(x, y, z))
-							    		   .ignoreAirBlocks(false)
-							    		   .copyEntities(false)
-							                // configure here
-							    		   .build();
-							        Operations.complete(operation);
-							        System.out.println("Operation complete");
-							        _state = stateWhenRegenered;
-							        return;
-						    }
-						}catch (IOException | WorldEditException e) {
+							clipboard = reader.read();
+							Operation operation = new ClipboardHolder(clipboard)
+									.createPaste(editSession)
+									.to(BlockVector3.at(x, y, z))
+									.ignoreAirBlocks(false)
+									.copyEntities(false)
+									.build();
+							Operations.complete(operation);
+							System.out.println("Operation complete");
+							_state = stateWhenRegenered;
+							return 0;
+						} catch (IOException | WorldEditException e) {
 							e.printStackTrace();
+							return 1;
 						}
-					}else {
-						SheepWar.getInstance().getLogger().warning("ClipboardFormat null");
 					}
-				}
+				});
 			}
-		});
+		}
 	}
+	
 	public void cancelledGame() {
 		setState(StateArena.WAITING);
 		for (Player p : _playerInArena.keySet()) {
@@ -236,10 +242,10 @@ public class Arena {
 				}
 			}
 		}
+		_state = state;
 		if(state == StateArena.WAITING || state == StateArena.MAINTENANCE) {
 			regenArena(state);
 		}
-		_state = state;
 		return true;
 	}
 	

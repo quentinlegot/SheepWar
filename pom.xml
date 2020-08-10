@@ -23,6 +23,10 @@
       </resources>
   </build>
   <repositories>
+  	<repository>
+  		<id>github-asyncworldedit-api</id>
+  		<url>https://raw.githubusercontent.com/SBPrime/AsyncWorldEdit/maven-artifact/</url>            
+	  </repository>
       <repository>
           <id>spigot-repo</id>
           <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
@@ -45,5 +49,12 @@
           <version>1.14.4-R0.1-SNAPSHOT</version>
           <scope>provided</scope>
       </dependency>
+      <dependency>
+  			<groupId>org.primesoft.asyncworldedit</groupId>
+  			<artifactId>AsyncWorldEdit-API</artifactId>
+  			<version>[2.2.0-rc-01, 2.2.0)</version>
+  			<type>jar</type>
+  			<scope>provided</scope>
+</dependency>
   </dependencies>
 </project>
