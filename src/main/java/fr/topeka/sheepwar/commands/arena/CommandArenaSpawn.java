@@ -28,16 +28,23 @@ public class CommandArenaSpawn extends AbstractCommand {
 				Arena arena = _instance._arenaList.get(args[2]);
 				switch(args[3]) {
 				case "add":
-					if(arena.teams.containsKey(args[3])) {
-						if(arena.teams.get(args[3]).addSpawn(player.getLocation())) {
-							player.sendMessage("Spawn added to team" + args[3]);
+					if(nArgs > 4) {
+						if(args[4].toUpperCase().equals("LOBBY")) {
+							arena.lobby = new SpawnLocation(player.getLocation());
+							player.sendMessage("Lobby location has been moved to " + player.getLocation().toString());
 							return true;
 						}
-						player.sendMessage(ChatColor.RED + "Max numbers of spawns has been already added to this team");
+						if(arena.teams.containsKey(args[4])) {
+							if(arena.teams.get(args[4]).addSpawn(player.getLocation())) {
+								player.sendMessage("Spawn added to team" + args[3]);
+								return true;
+							}
+							player.sendMessage(ChatColor.RED + "Max numbers of spawns has been already added to this team");
+							return false;
+						}
+						player.sendMessage("Team doesn't exist");
 						return false;
 					}
-					player.sendMessage("Team doesn't exist");
-					return false;
 				case "list":
 					for(Team team : arena.teams.values()) {
 						player.sendMessage("team " + team._name + " spawns:");
