@@ -27,4 +27,9 @@ public class CommandJoin extends AbstractCommand {
 		return false;
 	}
 
+	@Override
+	public void commandUsage() {
+		player.sendMessage("/sw join <arena_name>");		
+	}
+
 }

@@ -7,5 +7,7 @@ depend: [WorldEdit]
 prefix: Testing
 commands:
   sheepwar:
+    aliases: sw
+    usage: /sw help
     description: SheepWar command
     permission: SheepWar.use

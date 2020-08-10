@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -46,8 +47,10 @@ public class Arena {
 	public String _Name;
 	public World world = null;
 	public double x, y, z;
+	private SheepWar _instance;
 	
-	public Arena(String name, StateArena state) {
+	public Arena(SheepWar instance, String name, StateArena state) {
+		this._instance = instance;
 		this._Name = name;
 		this._state = state;
 		teams.put("RED", new Team("RED", this));
@@ -142,7 +145,7 @@ public class Arena {
 		for(Player p : _playerInArena.keySet()) {
 			playerLeave(p);
 		}
-		regenArena();
+		regenArena(StateArena.WAITING);
 	}
 	
 	public void startGame() {
@@ -170,35 +173,41 @@ public class Arena {
 		}
 	}
 	
-	private void regenArena() {
-		setState(StateArena.LOADING);
-		Clipboard clipboard;
-		System.out.println(SheepWar.getInstance().getDataFolder().getAbsolutePath() + File.separator + _Name + ".schem");
-		File file = new File(SheepWar.getInstance().getDataFolder().getAbsolutePath() + File.separator + _Name + ".schem");
-		if(file.exists()) {
-			ClipboardFormat format = ClipboardFormats.findByFile(file);
-			if(format != null) {
-				try (ClipboardReader reader = format.getReader(new FileInputStream(file))) {
-				    clipboard = reader.read();
-				    try(EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitAdapter.adapt(world), -1)){
-				    	Operation operation = new ClipboardHolder(clipboard)
-					    		   .createPaste(editSession)
-					    		   .to(BlockVector3.at(x, y, z))
-					    		   .ignoreAirBlocks(false)
-					    		   .copyEntities(false)
-					                // configure here
-					    		   .build();
-					        Operations.complete(operation);
-					        System.out.println("Operation complete");
-					        return;
-				    }
-				}catch (IOException | WorldEditException e) {
-					e.printStackTrace();
+	private void regenArena(StateArena stateWhenRegenered) {
+		_state = StateArena.LOADING;
+		Bukkit.getScheduler().runTaskAsynchronously(_instance, new Runnable() {
+			@Override
+			public void run() {
+				Clipboard clipboard;
+				System.out.println(SheepWar.getInstance().getDataFolder().getAbsolutePath() + File.separator + _Name + ".schem");
+				File file = new File(SheepWar.getInstance().getDataFolder().getAbsolutePath() + File.separator + _Name + ".schem");
+				if(file.exists()) {
+					ClipboardFormat format = ClipboardFormats.findByFile(file);
+					if(format != null) {
+						try (ClipboardReader reader = format.getReader(new FileInputStream(file))) {
+						    clipboard = reader.read();
+						    try(EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitAdapter.adapt(world), -1)){
+						    	Operation operation = new ClipboardHolder(clipboard)
+							    		   .createPaste(editSession)
+							    		   .to(BlockVector3.at(x, y, z))
+							    		   .ignoreAirBlocks(false)
+							    		   .copyEntities(false)
+							                // configure here
+							    		   .build();
+							        Operations.complete(operation);
+							        System.out.println("Operation complete");
+							        _state = stateWhenRegenered;
+							        return;
+						    }
+						}catch (IOException | WorldEditException e) {
+							e.printStackTrace();
+						}
+					}else {
+						SheepWar.getInstance().getLogger().warning("ClipboardFormat null");
+					}
 				}
-			}else {
-				SheepWar.getInstance().getLogger().warning("ClipboardFormat null");
 			}
-		}
+		});
 	}
 	public void cancelledGame() {
 		setState(StateArena.WAITING);
@@ -228,7 +237,7 @@ public class Arena {
 			}
 		}
 		if(state == StateArena.WAITING || state == StateArena.MAINTENANCE) {
-			regenArena();
+			regenArena(state);
 		}
 		_state = state;
 		return true;

@@ -29,4 +29,10 @@ public class CommandArenaRemove extends AbstractCommand {
 		return true;
 	}
 
+	@Override
+	public void commandUsage() {
+		player.sendMessage("/sw arena remove <arena_name>");
+		
+	}
+
 }

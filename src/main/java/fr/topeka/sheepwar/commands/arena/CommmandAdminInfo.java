@@ -47,4 +47,9 @@ public class CommmandAdminInfo extends AbstractCommand {
 		return false;
 	}
 
+	@Override
+	public void commandUsage() {
+		player.sendMessage("/sw arena info <arena_name>");	
+	}
+
 }

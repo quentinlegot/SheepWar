@@ -22,4 +22,9 @@ public class Commandleave extends AbstractCommand {
 		return true;
 	}
 
+	@Override
+	public void commandUsage() {
+		player.sendMessage("/sw leave");
+	}
+
 }

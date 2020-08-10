@@ -59,4 +59,10 @@ public class CommandArena extends AbstractCommand {
 		return false;
 	}
 
+	@Override
+	public void commandUsage() {
+		player.sendMessage("/sw arena help");
+		
+	}
+
 }
