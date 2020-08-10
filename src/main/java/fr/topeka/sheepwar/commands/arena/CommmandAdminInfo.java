@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 
 import fr.topeka.sheepwar.SheepWar;
 import fr.topeka.sheepwar.arena.Arena;
+import fr.topeka.sheepwar.arena.Team;
 import fr.topeka.sheepwar.commands.AbstractCommand;
 import fr.topeka.sheepwar.commands.Permission;
 
@@ -36,9 +37,11 @@ public class CommmandAdminInfo extends AbstractCommand {
 				}
 				player.sendMessage("Current state: " + a._state.toString());
 				player.sendMessage("Player in Arena: " + a._playerInArena.size());
-				player.sendMessage("Numbers of Red spawns: " + a.spawnsRed.size() +  "/" + a._maxSize / 2);
-				player.sendMessage("Numbers of Blue spawns: " + a.spawnsBlue.size() + "/" + a._maxSize / 2);
+				for(Team team : a.teams.values()) {
+					player.sendMessage("Numbers of " + team._name + " spawns: " + team.spawns.size() + "/" + (a._maxSize / a.teams.size()));
+				}
 				player.sendMessage("minimum / maximum players: " + a._minSize + "/" + a._maxSize);
+				return true;
 			}
 		}
 		return false;
