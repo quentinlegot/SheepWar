@@ -12,7 +12,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.primesoft.asyncworldedit.api.IAsyncWorldEdit;
+import org.primesoft.asyncworldedit.api.blockPlacer.IBlockPlacer;
+import org.primesoft.asyncworldedit.api.playerManager.IPlayerManager;
+import org.primesoft.asyncworldedit.api.worldedit.IAsyncEditSessionFactory;
 
+import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 /**
@@ -26,12 +31,20 @@ public class SheepWar extends JavaPlugin{
 	public HashMap<Player, String> playerInArena = new HashMap<>();
 	private static SheepWar _instance;
 	public WorldEditPlugin WE;
+	public IAsyncWorldEdit aweAPI;
+	public IAsyncEditSessionFactory esFactory;
+	public IBlockPlacer blockPlacer;
+	public IPlayerManager playerManager;
 	
 	@Override
 	public void onEnable() {
 		saveDefaultConfig();
 		_instance = this;
 		WE = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
+		aweAPI = (IAsyncWorldEdit)Bukkit.getServer().getPluginManager().getPlugin("AsyncWorldEdit");
+		esFactory = (IAsyncEditSessionFactory)WorldEdit.getInstance().getEditSessionFactory();
+		blockPlacer = aweAPI.getBlockPlacer();
+		playerManager = aweAPI.getPlayerManager();
 		Commandhandler Commandhandler = new Commandhandler(_instance);
 		getCommand("sheepwar").setExecutor(Commandhandler);
 		getCommand("sheepwar").setTabCompleter(Commandhandler);
