@@ -38,6 +38,7 @@ public class Arena {
 	public HashMap<Player, Team> _playerTeam = new HashMap<>();
 	public HashMap<Player, ItemStack[]> _playerInventory = new HashMap<>();
 	public HashMap<Player, ItemStack[]> _playerArmor = new HashMap<>();
+	public List<Player> _playerInLobby = new ArrayList<>();
 	public HashMap<String, Team> teams = new HashMap<>();
 	public SpawnLocation lobby = null;
 	public StateArena _state = StateArena.MAINTENANCE;
@@ -65,9 +66,10 @@ public class Arena {
 		_playerInArena.put(player, player.getLocation());
 		_playerInventory.put(player, player.getInventory().getContents());
 		_playerArmor.put(player, player.getInventory().getArmorContents());
-		SheepWar.getInstance().playerInArena.put(player, _Name);
+		SheepWar.getInstance()._playerInArena.put(player, _Name);
 		player.getInventory().clear();
 		player.teleport(lobby.toLocation());
+		_playerInLobby.add(player);
 		startGame();
 		return true;
 	}
@@ -92,8 +94,8 @@ public class Arena {
 		if(_playerTeam.containsKey(player))
 			_playerTeam.remove(player);
 		
-		SheepWar.getInstance().playerInArena.remove(player);
-		
+		SheepWar.getInstance()._playerInArena.remove(player);
+		checkWin();
 	}
 	
 	public void playerLeave(Player player, String message) {
@@ -108,7 +110,7 @@ public class Arena {
 		}
 		setState(StateArena.STARTING);
 		LaunchingGameTask task = new LaunchingGameTask(this);
-		task.runTaskTimerAsynchronously(SheepWar.getInstance(), 0, 20);
+		task.runTaskTimer(SheepWar.getInstance(), 0, 20);
 	}
 	
 	public void playingGameTask() {
@@ -117,13 +119,25 @@ public class Arena {
 			if(!_playerTeam.containsKey(player)) {
 				setPlayerToRandomTeam(player);
 			}
+			_playerInLobby.remove(player);
+			_playerTeam.get(player)._playersAlive.add(player);
+			player.teleport(_playerTeam.get(player).spawns.get((int) (Math.random() * _playerTeam.get(player).spawns.size() - 1)).toLocation());
 		}
+		
 		PlayingGameTask task = new PlayingGameTask(this);
-		task.runTaskTimerAsynchronously(SheepWar.getInstance(), 0, 20);
+		task.runTaskTimer(SheepWar.getInstance(), 0, 20);
 	}
 	
 	public void setPlayerToRandomTeam(Player player) {
-		// TODO Auto-generated method stub
+		Team teamWithLessPlayer = null;
+		for(Team t : teams.values()) {
+			if(teamWithLessPlayer == null)
+				teamWithLessPlayer = t;
+			else if(t._players.size() < teamWithLessPlayer._players.size())
+				teamWithLessPlayer = t;
+		}
+		_playerTeam.put(player, teamWithLessPlayer);
+		teamWithLessPlayer._players.add(player);
 		
 	}
 	
@@ -138,7 +152,7 @@ public class Arena {
 		return false;
 	}
 
-	private void finishGameTask() {
+	public void finishGameTask() {
 		for(Team t : teams.values()) {
 			t._players.clear();
 			t._playersAlive.clear();
@@ -153,6 +167,11 @@ public class Arena {
 	public void startGame() {
 		if(_playerInArena.size() >= _minSize && _state == StateArena.WAITING)
 			launchingGameTask();
+		else {
+			for(Player p : _playerInArena.keySet()) {
+				p.sendMessage("Waiting for player: " + _playerInArena.size() + "/" + _minSize);
+			}
+		}
 	}
 	
 	public void checkWin() {
@@ -226,6 +245,7 @@ public class Arena {
 			p.teleport(lobby.toLocation());
 		}
 	}
+	
 	public void eliminate(Player victim) {
 		victim.resetTitle();
 		victim.sendTitle("You're died", null, 10, 70, 20);
@@ -236,7 +256,7 @@ public class Arena {
 	}
 	
 	public boolean setState(StateArena state) {
-		if(state == StateArena.WAITING) {
+		if(state.equals(StateArena.WAITING)) {
 			if(lobby == null)
 				return false;
 			for(Team team : teams.values()) {
@@ -246,7 +266,7 @@ public class Arena {
 			}
 		}
 		_state = state;
-		if(state == StateArena.WAITING || state == StateArena.MAINTENANCE) {
+		if(state.equals(StateArena.WAITING) || state.equals(StateArena.MAINTENANCE)) {
 			regenArena(state);
 		}
 		return true;

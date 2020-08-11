@@ -14,8 +14,8 @@ public class Commandleave extends AbstractCommand {
 	@Permission(_permission = "sheepwar.leave")
 	@Override
 	public boolean handle() {
-		if(_instance.playerInArena.get(player) != null) {
-			_instance._arenaList.get(_instance.playerInArena.get(player)).playerLeave(player, "You have left the arena");
+		if(_instance._playerInArena.get(player) != null) {
+			_instance._arenaList.get(_instance._playerInArena.get(player)).playerLeave(player, "You have left the arena");
 			return true;
 		}
 		player.sendMessage("You're not currently playing SheepWar game");

@@ -48,7 +48,10 @@ public class Commandhandler implements CommandExecutor, TabCompleter {
 						permission = method.getAnnotation(Permission.class);
 					}
 					if(permission == null || player.hasPermission(permission._permission())) {
-						return CommandObj.handle();
+						if(!CommandObj.handle()) {
+							CommandObj.commandUsage();
+						}
+						return true;
 					}
 					player.sendMessage(ChatColor.RED + "You haven't permission to execute this command");
 					return true;
@@ -64,7 +67,7 @@ public class Commandhandler implements CommandExecutor, TabCompleter {
 	}
 
 	@Override
-	public List<String> onTabComplete(CommandSender arg0, Command arg1, String arg2, String[] arg3) {
+	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -15,9 +15,10 @@ public class CommandJoin extends AbstractCommand {
 	@Override
 	public boolean handle() {
 		if(nArgs > 1) {
-			if(!_instance.playerInArena.containsKey(player)){
-				if(_instance._arenaList.containsKey(args[1].toLowerCase())) {
+			if(!_instance._playerInArena.containsKey(player)){
+				if(_instance._arenaList.containsKey(args[1])) {
 					if(_instance._arenaList.get(args[1]).playerJoin(player)) {
+						player.sendMessage("You joined arena " + args[1]);
 						return true;
 					}
 					player.sendMessage("Arena is unavailable");

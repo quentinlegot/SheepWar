@@ -47,7 +47,10 @@ public class CommandArena extends AbstractCommand {
 					permission = method.getAnnotation(Permission.class);
 				}
 				if(permission == null || player.hasPermission(permission._permission())) {
-					return CommandObj.handle();
+					if(!CommandObj.handle()) {
+						CommandObj.commandUsage();
+					}
+					return true;
 				}
 				player.sendMessage(ChatColor.RED + "You haven't permission to execute this command");
 				return true;

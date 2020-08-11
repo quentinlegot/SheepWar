@@ -17,11 +17,13 @@ public class LaunchingGameTask extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		if(_arena._state != StateArena.STARTING || _arena._playerInArena.size() >= _arena._minSize) {
+		if(isCancelled())
+			return;
+		if(_arena._state == StateArena.STARTING && _arena._playerInArena.size() >= _arena._minSize) {
 			if(_time < 6) {
 				if(_time == 0) {
-					cancel();
 					_arena.playingGameTask();
+					cancel();
 					return;
 				}
 				for(Player p : _arena._playerInArena.keySet())
@@ -32,7 +34,6 @@ public class LaunchingGameTask extends BukkitRunnable {
 		}
 		_arena.cancelledGame();
 		cancel();
-		
 	}
 
 }
