@@ -35,8 +35,8 @@ public class CommandArenaSpawn extends AbstractCommand {
 							return true;
 						}
 						if(arena.teams.containsKey(args[4])) {
-							if(arena.teams.get(args[4]).addSpawn(player.getLocation())) {
-								player.sendMessage("Spawn added to team" + args[3]);
+							if(arena.teams.get(args[4].toUpperCase()).addSpawn(player.getLocation())) {
+								player.sendMessage("Spawn added to team " + args[4]);
 								return true;
 							}
 							player.sendMessage(ChatColor.RED + "Max numbers of spawns has been already added to this team");
@@ -56,9 +56,9 @@ public class CommandArenaSpawn extends AbstractCommand {
 					}
 					return true;
 				case "remove":
-					if(arena.teams.containsKey(args[3])) {
-						if(nArgs > 4 && SheepWar.isInteger(args[4])) {
-							if(arena.teams.get(args[3]).removeSpawn(Integer.parseInt(args[4]))) {
+					if(arena.teams.containsKey(args[4].toUpperCase())) {
+						if(nArgs > 5 && SheepWar.isInteger(args[5])) {
+							if(arena.teams.get(args[4]).removeSpawn(Integer.parseInt(args[5]))) {
 								player.sendMessage("spawn deleted");
 								return true;
 							}
@@ -68,11 +68,8 @@ public class CommandArenaSpawn extends AbstractCommand {
 						player.sendMessage("Not enough arguments or argument 5 isn't a integer");
 						return false;
 					}
-					player.sendMessage("Team " + args[3] + " doesn't exist");
+					player.sendMessage("Team " + args[4] + " doesn't exist");
 					return false;
-				default:
-					commandUsage();
-					break;
 				}
 				return false;
 			}

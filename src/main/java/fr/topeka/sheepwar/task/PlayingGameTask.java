@@ -13,11 +13,6 @@ public class PlayingGameTask extends BukkitRunnable{
 	public PlayingGameTask(Arena arena) {
 		_arena = arena;
 		_timer = _arena.gameDuration;
-		for (Player p : _arena._playerInArena.keySet()) {
-			if(!_arena._playerTeam.containsKey(p)) {
-				_arena.setPlayerToRandomTeam(p);
-			}
-		}
 	}
 
 	@Override
@@ -27,6 +22,7 @@ public class PlayingGameTask extends BukkitRunnable{
 			return;
 		}
 		if(_timer == 0) {
+			_arena.finishGameTask();
 			cancel();
 			return;
 		}

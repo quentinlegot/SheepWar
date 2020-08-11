@@ -25,9 +25,6 @@ public class PlayerJoinLeaveListener implements Listener {
 	@EventHandler
 	public void onQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
-		if(_instance._playerOnLobby.contains(player)) {
-			_instance._playerOnLobby.remove(player);
-		}
 		for(Arena a : _instance._arenaList.values()) {
 			if(a._playerInArena.containsKey(player)) {
 				a.playerLeave(player);

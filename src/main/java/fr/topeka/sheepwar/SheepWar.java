@@ -25,10 +25,9 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
  * @author Topeka_
  */
 public class SheepWar extends JavaPlugin{
-	
-	public List<Player> _playerOnLobby = new ArrayList<>();
+
 	public HashMap<String, Arena> _arenaList = new HashMap<>();
-	public HashMap<Player, String> playerInArena = new HashMap<>();
+	public HashMap<Player, String> _playerInArena = new HashMap<>();
 	private static SheepWar _instance;
 	public WorldEditPlugin WE;
 	public IAsyncWorldEdit aweAPI;
