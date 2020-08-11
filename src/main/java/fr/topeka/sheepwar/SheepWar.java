@@ -6,6 +6,7 @@ import java.util.List;
 
 import fr.topeka.sheepwar.arena.Arena;
 import fr.topeka.sheepwar.commands.Commandhandler;
+import fr.topeka.sheepwar.listener.DamageListener;
 import fr.topeka.sheepwar.listener.PlayerJoinLeaveListener;
 import fr.topeka.sheepwar.listener.playerBlocksListener;
 import org.bukkit.Bukkit;
@@ -53,6 +54,7 @@ public class SheepWar extends JavaPlugin{
 		getCommand("sheepwar").setAliases(aliases);
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new PlayerJoinLeaveListener(_instance), _instance);
+		pm.registerEvents(new DamageListener(), _instance);
 		pm.registerEvents(new playerBlocksListener(_instance), _instance);
 	}
 	

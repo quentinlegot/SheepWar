@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -79,6 +81,7 @@ public class Arena {
 	}
 	
 	public void playerLeave(Player player) {
+		player.setGameMode(Bukkit.getDefaultGameMode());
 		player.teleport(_playerInArena.get(player));
 		_playerInArena.remove(player);
 		player.getInventory().setContents(_playerInventory.get(player));
@@ -122,6 +125,10 @@ public class Arena {
 			_playerInLobby.remove(player);
 			_playerTeam.get(player)._playersAlive.add(player);
 			player.teleport(_playerTeam.get(player).spawns.get((int) (Math.random() * _playerTeam.get(player).spawns.size() - 1)).toLocation());
+			player.setGameMode(GameMode.SURVIVAL);
+			player.setHealth(20);
+			player.setSaturation(20);
+			player.setFoodLevel(20);
 		}
 		
 		PlayingGameTask task = new PlayingGameTask(this);
@@ -158,7 +165,11 @@ public class Arena {
 			t._playersAlive.clear();
 		}
 		_playerTeam.clear();
+		List<Player> playerList = new ArrayList<>();
 		for(Player p : _playerInArena.keySet()) {
+			playerList.add(p);
+		}
+		for(Player p : playerList) {
 			playerLeave(p);
 		}
 		regenArena(StateArena.WAITING);
@@ -249,9 +260,11 @@ public class Arena {
 	public void eliminate(Player victim) {
 		victim.resetTitle();
 		victim.sendTitle("You're died", null, 10, 70, 20);
+		victim.setGameMode(GameMode.SPECTATOR);
 		victim.setHealth(20);
 		victim.setSaturation(20);
 		victim.setFoodLevel(20);
+		_playerTeam.get(victim)._playersAlive.remove(victim);
 		checkWin();
 	}
 	
