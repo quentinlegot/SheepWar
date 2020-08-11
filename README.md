@@ -1,4 +1,4 @@
-# SheepWar
+# SheepWar ![Java CI with Maven](https://github.com/SexiestCHiba/SheepWar/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master&event=push)
 
 A plugin inspired by Epicube server (RIP).
 Plugin do no work, it's currently WIP and untested
