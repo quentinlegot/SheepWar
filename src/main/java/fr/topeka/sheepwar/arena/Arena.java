@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -58,14 +59,14 @@ public class Arena {
 		this._instance = instance;
 		this._Name = name;
 		this._state = state;
-		teams.put("RED", new Team("RED", this));
-		teams.put("BLUE", new Team("BLUE", this));
+		teams.put("RED", new Team("RED", Color.RED, this));
+		teams.put("BLUE", new Team("BLUE", Color.BLUE, this));
 	}
 
 	public boolean playerJoin(Player player) {
 		if(!(_state == StateArena.WAITING || _state == StateArena.STARTING) || _playerInArena.size() >= _maxSize || _playerInArena.containsKey(player))
 			return false;
-		_playerInArena.put(player, player.getLocation());
+		_playerInArena.put(player, player.getLocation().clone());
 		_playerInventory.put(player, player.getInventory().getContents());
 		_playerArmor.put(player, player.getInventory().getArmorContents());
 		SheepWar.getInstance()._playerInArena.put(player, _Name);
@@ -82,8 +83,6 @@ public class Arena {
 	
 	public void playerLeave(Player player) {
 		player.setGameMode(Bukkit.getDefaultGameMode());
-		player.teleport(_playerInArena.get(player));
-		_playerInArena.remove(player);
 		player.getInventory().setContents(_playerInventory.get(player));
 		_playerInventory.remove(player);
 		player.getInventory().setArmorContents(_playerArmor.get(player));
@@ -98,7 +97,11 @@ public class Arena {
 			_playerTeam.remove(player);
 		
 		SheepWar.getInstance()._playerInArena.remove(player);
-		checkWin();
+		if(_playerInArena.get(player) != null) 
+			player.teleport(_playerInArena.get(player));
+		else
+			player.teleport(lobby.toLocation());
+		_playerInArena.remove(player);
 	}
 	
 	public void playerLeave(Player player, String message) {
@@ -123,7 +126,9 @@ public class Arena {
 				setPlayerToRandomTeam(player);
 			}
 			_playerInLobby.remove(player);
-			_playerTeam.get(player)._playersAlive.add(player);
+			Team playerTeam = _playerTeam.get(player);
+			playerTeam._playersAlive.add(player);
+			player.getInventory().setArmorContents(playerTeam.armor);
 			player.teleport(_playerTeam.get(player).spawns.get((int) (Math.random() * _playerTeam.get(player).spawns.size() - 1)).toLocation());
 			player.setGameMode(GameMode.SURVIVAL);
 			player.setHealth(20);
