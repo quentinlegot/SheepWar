@@ -1,21 +1,23 @@
 package fr.topeka.sheepwar.kits;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class Kit {
+public abstract class Kit {
 
-	protected ItemStack[] inventory;
-	protected ItemStack[] armor;
+	protected List<ItemStack[]> inventory = new ArrayList<>();
 	
-	public Kit(ItemStack[] inventory, ItemStack[] armor) {
-		this.inventory = inventory;
-		this.armor = armor;
+	public Kit(ItemStack[] inventory) {
+		this.inventory.add(inventory);
 	}
 	
-	public void setInventory(Player p) {
-		p.getInventory().setContents(inventory);
-		p.getInventory().setArmorContents(armor);
+	public void setInventory(Player p, int level) {
+		if(inventory.size() > level) {
+			p.getInventory().setContents(inventory.get(level));
+		}
 	}
 	
 	

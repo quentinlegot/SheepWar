@@ -10,7 +10,6 @@ public class CommandArenaRemove extends AbstractCommand {
 
 	public CommandArenaRemove(SheepWar instance, Player player, String label, String[] args, int nArgs) {
 		super(instance, player, label, args, nArgs);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Permission(_permission = "sheepwar.arena.remove")
