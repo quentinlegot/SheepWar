@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import fr.topeka.sheepwar.commands.arena.CommandArena;
+import fr.topeka.sheepwar.commands.kits.CommandKits;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -36,6 +38,9 @@ public class Commandhandler implements CommandExecutor, TabCompleter {
 				}
 				if(args[0].toUpperCase().equals("ARENA")) {
 					CommandObj = new CommandArena(_instance, player, label, args, nArgs);
+				}
+				if(args[0].toUpperCase().equals("KITS")) {
+					CommandObj = new CommandKits(_instance, player, label, args, nArgs);
 				}
 			}
 			

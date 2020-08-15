@@ -19,15 +19,14 @@ public class CommandArenaSpawn extends AbstractCommand {
 	@Permission(_permission = "sheepwar.arena.spawn")
 	@Override
 	public boolean handle() {
-		// TODO Auto-generated method stub
 		// /sw arena spawn <arena_name> add <team>
 		// /sw arena spawn <arena_name> list
 		// /sw arena spawn <arena_name> remove <team> <number>
 		if(nArgs > 3) {
 			if(_instance._arenaList.containsKey(args[2])) {
 				Arena arena = _instance._arenaList.get(args[2]);
-				switch(args[3]) {
-				case "add":
+				switch(args[3].toUpperCase()) {
+				case "ADD":
 					if(nArgs > 4) {
 						if(args[4].toUpperCase().equals("LOBBY")) {
 							arena.lobby = new SpawnLocation(player.getLocation());
@@ -45,7 +44,8 @@ public class CommandArenaSpawn extends AbstractCommand {
 						player.sendMessage("Team doesn't exist");
 						return false;
 					}
-				case "list":
+					break;
+				case "LIST":
 					for(Team team : arena.teams.values()) {
 						player.sendMessage("team " + team._name + " spawns:");
 						int i = 0;
@@ -54,8 +54,8 @@ public class CommandArenaSpawn extends AbstractCommand {
 							i++;
 						}
 					}
-					return true;
-				case "remove":
+					break;
+				case "REMOVE":
 					if(arena.teams.containsKey(args[4].toUpperCase())) {
 						if(nArgs > 5 && SheepWar.isInteger(args[5])) {
 							if(arena.teams.get(args[4]).removeSpawn(Integer.parseInt(args[5]))) {
@@ -70,8 +70,9 @@ public class CommandArenaSpawn extends AbstractCommand {
 					}
 					player.sendMessage("Team " + args[4] + " doesn't exist");
 					return false;
+				default:
+					return false;
 				}
-				return false;
 			}
 			player.sendMessage("Arena " + args[2] + " doesn't exist");
 			return false;
