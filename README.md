@@ -10,7 +10,7 @@ Plugin do no work, it's currently WIP and untested
 
 ### Players commands
 
-- /sw join <arena>
+- /sw join <arena_name>
   - Permission: sheepwar.join
   - Description: Join an Arena
  
@@ -24,11 +24,11 @@ Plugin do no work, it's currently WIP and untested
 
 # Admin commands
 
-- /sw arena create <name>
+- /sw arena create <arena_name>
   - Permission: sheepwar.arena.create
   - Description: Create a new arena named <name> if it not exist
 
-- /sw arena remove <name>
+- /sw arena remove <arena_name>
   - Permission: sheepwar.arena.remove
   - Description: remove the arena <name> if it exist
   
@@ -36,22 +36,30 @@ Plugin do no work, it's currently WIP and untested
   - Permission: sheepwar.arena.list
   - Description: List every arena
   
-- /sw arena info <name>
+- /sw arena info <arena_name>
   - Permission: sheepwar.arena.list
   - Description: display detailled information of arena <name>
   
-- /sw arena schem - /sw admin schematic
+- /sw arena schem <arena_name> - /sw admin schematic <arena_name>
   - Permission: sheepwar.arena.schem
   - Description: Save player worldedit selection of the arena as a .schem file to regenerate it after each game
  
-- /sw arena state <state> -- NOT IMPLEMENTED
+- /sw arena state <arena_name> <state>
   - Permission: sheepwar.arena.state
   - Description: Force changing the state of an arena, <state> can only be WAITING or MAINTENANCE, game will pass through LOADING before
   
-- /sw arena spawn -- NOT IMPLEMENTED
+- /sw arena spawn <arena_name> <add/remove/list> [team] [integer]
   - Permission: sheepwar.arena.spawn
+  - Description: Add/edit/list/remove team spawns and lobby location
   
 - /sw arena help [page] - /sw admin -- WIP
   - Permission: sheepwar.arena.help
   - Description: Show help
  
+- /sw kits new -- NOT IMPLEMENTED
+
+- /sw kits edit -- NOT IMPLEMENTED
+
+- /sw kits list -- NOT IMPLEMENTED
+
+- /sw kits remove -- NOT IMPLEMENTED
