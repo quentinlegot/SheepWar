@@ -1,8 +1,7 @@
-# SheepWar ![Java CI with Maven](https://github.com/SexiestCHiba/SheepWar/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master&event=push)
+# SheepWar ![Java CI with Maven](https://github.com/SexiestCHiba/SheepWar/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master&event=push) [![GitHub license](https://img.shields.io/github/license/SexiestCHiba/SheepWar)](https://github.com/SexiestCHiba/SheepWar/blob/master/LICENSE) ![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/SexiestCHiba/SheepWar)
 
 A plugin inspired by Epicube server (RIP).
-Plugin do no work, it's currently WIP and untested
-
+Currently WIP and untested
 
 ## Commands
 
