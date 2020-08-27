@@ -6,6 +6,7 @@ import java.util.List;
 
 import fr.topeka.sheepwar.arena.Arena;
 import fr.topeka.sheepwar.commands.Commandhandler;
+import fr.topeka.sheepwar.kits.Kit;
 import fr.topeka.sheepwar.listener.DamageListener;
 import fr.topeka.sheepwar.listener.PlayerJoinLeaveListener;
 import fr.topeka.sheepwar.listener.playerBlocksListener;
@@ -35,6 +36,7 @@ public class SheepWar extends JavaPlugin{
 	public IAsyncEditSessionFactory esFactory;
 	public IBlockPlacer blockPlacer;
 	public IPlayerManager playerManager;
+	public HashMap<String, Kit> kitList = new HashMap<>();
 	
 	@Override
 	public void onEnable() {

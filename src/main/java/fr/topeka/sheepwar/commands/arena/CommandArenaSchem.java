@@ -77,7 +77,6 @@ public class CommandArenaSchem extends AbstractCommand {
 											return 0;
 										}
 									} catch (WorldEditException | IOException e) {
-										// TODO Auto-generated catch block
 										e.printStackTrace();
 										return 1;
 									}
