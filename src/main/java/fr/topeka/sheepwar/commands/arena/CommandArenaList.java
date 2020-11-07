@@ -4,15 +4,19 @@ import org.bukkit.entity.Player;
 
 import fr.topeka.sheepwar.SheepWar;
 import fr.topeka.sheepwar.commands.AbstractCommand;
-import fr.topeka.sheepwar.commands.Permission;
+import fr.topeka.sheepwar.commands.CommandDeclaration;
 
+@CommandDeclaration(
+		command = "LIST",
+		usage = "/sw arena list",
+		permission = "sheepwar.arena.list"
+		)
 public class CommandArenaList extends AbstractCommand {
 
 	public CommandArenaList(SheepWar instance, Player player, String label, String[] args, int nArgs) {
 		super(instance, player, label, args, nArgs);
 	}
 
-	@Permission(_permission = "sheepwar.arena.list")
 	@Override
 	public boolean handle() {
 		player.sendMessage("Arena list: ");
@@ -20,11 +24,6 @@ public class CommandArenaList extends AbstractCommand {
 			player.sendMessage(s);
 		}
 		return true;
-	}
-
-	@Override
-	public void commandUsage() {
-		player.sendMessage("/sw arena list");
 	}
 
 }

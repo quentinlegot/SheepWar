@@ -5,13 +5,17 @@ import org.bukkit.entity.Player;
 import fr.topeka.sheepwar.SheepWar;
 import fr.topeka.sheepwar.arena.Arena;
 
-public class Commandleave extends AbstractCommand {
+@CommandDeclaration(
+		command = "LEAVE",
+		usage = "/sw leave",
+		permission = "sheepwar.leave"
+		)
+public class CommandLeave extends AbstractCommand {
 
-	public Commandleave(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public CommandLeave(SheepWar instance, Player player, String label, String[] args, int nArgs) {
 		super(instance, player, label, args, nArgs);
 	}
 
-	@Permission(_permission = "sheepwar.leave")
 	@Override
 	public boolean handle() {
 		if(_instance._playerInArena.get(player) != null) {
@@ -22,11 +26,6 @@ public class Commandleave extends AbstractCommand {
 		}
 		player.sendMessage("You're not currently playing SheepWar game");
 		return true;
-	}
-
-	@Override
-	public void commandUsage() {
-		player.sendMessage("/sw leave");
 	}
 
 }

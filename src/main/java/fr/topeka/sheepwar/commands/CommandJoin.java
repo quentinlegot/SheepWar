@@ -4,6 +4,11 @@ import org.bukkit.entity.Player;
 
 import fr.topeka.sheepwar.SheepWar;
 
+@CommandDeclaration(
+		command = "JOIN",
+		usage = "/sw join <arena_name>",
+		permission = "sheepwar.join"
+		)
 public class CommandJoin extends AbstractCommand {
 
 	
@@ -11,7 +16,6 @@ public class CommandJoin extends AbstractCommand {
 		super(instance, player, label, args, nArgs);
 	}
 
-	@Permission(_permission = "sheepwar.join")
 	@Override
 	public boolean handle() {
 		if(nArgs > 1) {
@@ -32,11 +36,6 @@ public class CommandJoin extends AbstractCommand {
 		}
 		player.sendMessage("Not enough arguments");
 		return false;
-	}
-
-	@Override
-	public void commandUsage() {
-		player.sendMessage("/sw join <arena_name>");		
 	}
 
 }

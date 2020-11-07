@@ -6,15 +6,19 @@ import org.bukkit.entity.Player;
 import fr.topeka.sheepwar.SheepWar;
 import fr.topeka.sheepwar.arena.StateArena;
 import fr.topeka.sheepwar.commands.AbstractCommand;
-import fr.topeka.sheepwar.commands.Permission;
+import fr.topeka.sheepwar.commands.CommandDeclaration;
 
+@CommandDeclaration(
+		command = "CREATE",
+		usage = "/sw arena create <arena_name>",
+		permission = "sheepwar.arena.create"
+		)
 public class CommandArenaCreate extends AbstractCommand {
 
 	public CommandArenaCreate(SheepWar instance, Player player, String label, String[] args, int nArgs) {
 		super(instance, player, label, args, nArgs);
 	}
 
-	@Permission(_permission = "sheepwar.arena.create")
 	@Override
 	public boolean handle() {
 		if(nArgs > 2) {
@@ -29,12 +33,6 @@ public class CommandArenaCreate extends AbstractCommand {
 		}
 		player.sendMessage("not enough arguments");
 		return true;
-	}
-
-	@Override
-	public void commandUsage() {
-		player.sendMessage("/sw arena create <arena_name>");
-		
 	}
 
 }

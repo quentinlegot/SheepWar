@@ -23,30 +23,37 @@ import com.sk89q.worldedit.function.operation.ForwardExtentCopy;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
+import com.sk89q.worldedit.world.World;
 
 import fr.topeka.sheepwar.SheepWar;
 import fr.topeka.sheepwar.commands.AbstractCommand;
-import fr.topeka.sheepwar.commands.Permission;
+import fr.topeka.sheepwar.commands.CommandDeclaration;
+
 /**
  * 
  * @see https://worldedit.enginehub.org/en/latest/api/examples/clipboard/
  */
+@CommandDeclaration(
+		command = "SCHEMATIC",
+		aliases = { "SCHEM" },
+		usage = "/sw arena schem <arena_name>",
+		permission = "sheepwar.arena.schem"
+		)
 public class CommandArenaSchem extends AbstractCommand {
 
 	public CommandArenaSchem(SheepWar instance, Player player, String label, String[] args, int nArgs) {
 		super(instance, player, label, args, nArgs);
 	}
 
-	@Permission(_permission = "sheepwar.arena.schem")
 	@Override
 	public boolean handle() {
 		if(nArgs > 2) {
 			if(_instance._arenaList.containsKey(args[2])) {
 				Arena a = _instance._arenaList.get(args[2]);
 				IPlayerEntry awePlayer = _instance.playerManager.getConsolePlayer();
-				com.sk89q.worldedit.world.World world = BukkitAdapter.adapt(player.getWorld());
-				int maxBlocks = -1; // can be -1
-				BlockBag bb = null; // can be null
+				World world = BukkitAdapter.adapt(player.getWorld());
+				int maxBlocks = -1;
+				BlockBag bb = null;
 				IThreadSafeEditSession es = _instance.esFactory.getThreadSafeEditSession(world, maxBlocks, bb, awePlayer);
 				try {
 					if(_instance.WE.getSession(player).isSelectionDefined(BukkitAdapter.adapt(player.getWorld()))) {
@@ -78,6 +85,7 @@ public class CommandArenaSchem extends AbstractCommand {
 										}
 									} catch (WorldEditException | IOException e) {
 										e.printStackTrace();
+										player.sendMessage("Can't save schematic, please see console");
 										return 1;
 									}
 								}
@@ -94,12 +102,6 @@ public class CommandArenaSchem extends AbstractCommand {
 			}
 		}
 		return false;
-	}		
-
-	@Override
-	public void commandUsage() {
-		player.sendMessage("/sw arena schem <arena_name>");
-		
 	}
 	
 

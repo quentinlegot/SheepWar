@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import fr.topeka.sheepwar.arena.Arena;
-import fr.topeka.sheepwar.commands.Commandhandler;
+import fr.topeka.sheepwar.commands.CommandHandler;
 import fr.topeka.sheepwar.kits.Kit;
 import fr.topeka.sheepwar.listener.DamageListener;
 import fr.topeka.sheepwar.listener.PlayerJoinLeaveListener;
@@ -47,7 +47,7 @@ public class SheepWar extends JavaPlugin{
 		esFactory = (IAsyncEditSessionFactory)WorldEdit.getInstance().getEditSessionFactory();
 		blockPlacer = aweAPI.getBlockPlacer();
 		playerManager = aweAPI.getPlayerManager();
-		Commandhandler Commandhandler = new Commandhandler(_instance);
+		CommandHandler Commandhandler = new CommandHandler(_instance);
 		getCommand("sheepwar").setExecutor(Commandhandler);
 		getCommand("sheepwar").setTabCompleter(Commandhandler);
 		
