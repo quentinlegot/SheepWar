@@ -2,59 +2,107 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>fr.topeka.SheepWar</groupId>
   <artifactId>SheepWar</artifactId>
-  <version>0.0.1</version>
+  <version>1.0.0-SNAPSHOT</version>
   <name>SheepWar</name>
+  <inceptionYear>2020</inceptionYear>
+  <developers>
+  	<developer>
+  	  <name>Quentin LEGOT</name>
+  	  <id>SexiestCHiba</id>
+  	  <email>legotquentin@gmail.com</email>
+  	  <url>https://github.com/SexiestCHiba</url>
+  	</developer>
+  </developers>
+  <properties>
+    <projectEncoding>UTF-8</projectEncoding>
+    <project.build.sourceEncoding>${projectEncoding}</project.build.sourceEncoding>
+    <project.build.outputEncoding>${projectEncoding}</project.build.outputEncoding>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+  </properties>
   <build>
-      <sourceDirectory>src/main/java</sourceDirectory>
-      <plugins>
-          <plugin>
-              <artifactId>maven-compiler-plugin</artifactId>
-              <version>3.8.1</version>
-              <configuration>
-                  <source>11</source>
-                  <target>11</target>
-              </configuration>
-          </plugin>
-      </plugins>
-      <resources>
-          <resource>
-              <directory>src/main/resources</directory>
-          </resource>
-      </resources>
+    <finalName>${project.name}-${project.version}-no-dependencies</finalName>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+          <release>${maven.compiler.target}</release>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <configuration>
+          <quiet>true</quiet>
+          <verbose>false</verbose>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <finalName>${project.name}-${project.version}</finalName>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>*</include>
+        </includes>
+      </resource>
+    </resources>
   </build>
   <repositories>
-  	<repository>
-  		<id>github-asyncworldedit-api</id>
-  		<url>https://raw.githubusercontent.com/SBPrime/AsyncWorldEdit/maven-artifact/</url>            
-	  </repository>
-      <repository>
-          <id>spigot-repo</id>
-          <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-      </repository>
-      <repository>
-          <id>sk89q-repo</id>
-          <url>http://maven.sk89q.com/repo/</url>
-      </repository>
+    <repository>
+  	  <id>github-asyncworldedit-api</id>
+  	  <url>https://raw.githubusercontent.com/SBPrime/AsyncWorldEdit/maven-artifact/</url>            
+    </repository>
+    <repository>
+      <id>spigot-repo</id>
+      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+    </repository>
+    <repository>
+      <id>sk89q-repo</id>
+      <url>http://maven.sk89q.com/repo/</url>
+    </repository>
   </repositories>
   <dependencies>
-      <dependency>
-          <groupId>com.sk89q.worldedit</groupId>
-          <artifactId>worldedit-bukkit</artifactId>
-          <version>7.1.0</version>
-          <scope>provided</scope>
-      </dependency>
-      <dependency>
-          <groupId>org.spigotmc</groupId>
-          <artifactId>spigot-api</artifactId>
-          <version>1.14.4-R0.1-SNAPSHOT</version>
-          <scope>provided</scope>
-      </dependency>
-      <dependency>
-  			<groupId>org.primesoft.asyncworldedit</groupId>
-  			<artifactId>AsyncWorldEdit-API</artifactId>
-  			<version>[2.2.0-rc-01, 2.2.0)</version>
-  			<type>jar</type>
-  			<scope>provided</scope>
-</dependency>
+    <dependency>
+      <groupId>com.sk89q.worldedit</groupId>
+      <artifactId>worldedit-bukkit</artifactId>
+      <version>7.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot-api</artifactId>
+      <version>1.14.4-R0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+  	  <groupId>org.primesoft.asyncworldedit</groupId>
+  	  <artifactId>AsyncWorldEdit-API</artifactId>
+  	  <version>[2.2.0-rc-01, 2.2.0)</version>
+  	  <type>jar</type>
+  	  <scope>provided</scope>
+    </dependency>
+    <dependency>
+  	  <groupId>org.javatuples</groupId>
+  	  <artifactId>javatuples</artifactId>
+  	  <version>1.2</version>
+  	  <scope>compile</scope>
+  	  <optional>false</optional>
+	</dependency>
   </dependencies>
 </project>

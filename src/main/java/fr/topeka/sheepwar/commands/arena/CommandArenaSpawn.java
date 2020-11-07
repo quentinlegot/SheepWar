@@ -8,15 +8,19 @@ import fr.topeka.sheepwar.arena.Arena;
 import fr.topeka.sheepwar.arena.SpawnLocation;
 import fr.topeka.sheepwar.arena.Team;
 import fr.topeka.sheepwar.commands.AbstractCommand;
-import fr.topeka.sheepwar.commands.Permission;
+import fr.topeka.sheepwar.commands.CommandDeclaration;
 
+@CommandDeclaration(
+		command = "SPAWN",
+		usage = "/sw arena spawn <arena_name> <add/remove/list> [team] [integer]",
+		permission = "sheepwar.arena.spawn"
+		)
 public class CommandArenaSpawn extends AbstractCommand {
 
 	public CommandArenaSpawn(SheepWar instance, Player player, String label, String[] args, int nArgs) {
 		super(instance, player, label, args, nArgs);
 	}
 
-	@Permission(_permission = "sheepwar.arena.spawn")
 	@Override
 	public boolean handle() {
 		// /sw arena spawn <arena_name> add <team>
@@ -79,12 +83,6 @@ public class CommandArenaSpawn extends AbstractCommand {
 		}
 		player.sendMessage("Not enough arguments");
 		return false;
-	}
-
-	@Override
-	public void commandUsage() {
-		player.sendMessage("/sw arena spawn <arena_name> <add/remove/list> [team] [integer]");
-		
 	}
 
 }

@@ -6,15 +6,19 @@ import fr.topeka.sheepwar.SheepWar;
 import fr.topeka.sheepwar.arena.Arena;
 import fr.topeka.sheepwar.arena.StateArena;
 import fr.topeka.sheepwar.commands.AbstractCommand;
-import fr.topeka.sheepwar.commands.Permission;
+import fr.topeka.sheepwar.commands.CommandDeclaration;
 
+@CommandDeclaration(
+		command = "STATE",
+		usage = "/sw arena state <MAINTENANCE/WAITING>",
+		permission = "sheepwar.arena.state"
+		)
 public class CommandArenaState extends AbstractCommand {
 
 	public CommandArenaState(SheepWar instance, Player player, String label, String[] args, int nArgs) {
 		super(instance, player, label, args, nArgs);
 	}
 
-	@Permission(_permission = "sheepwar.arena.state")
 	@Override
 	public boolean handle() {
 		if(nArgs > 3) {
@@ -43,12 +47,6 @@ public class CommandArenaState extends AbstractCommand {
 		}
 		player.sendMessage("Not enough arguments");
 		return true;
-	}
-
-	@Override
-	public void commandUsage() {
-		player.sendMessage("/sw arena state <MAINTENANCE/WAITING>");
-		
 	}
 
 }

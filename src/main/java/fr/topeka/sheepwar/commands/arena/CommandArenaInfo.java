@@ -7,15 +7,19 @@ import fr.topeka.sheepwar.SheepWar;
 import fr.topeka.sheepwar.arena.Arena;
 import fr.topeka.sheepwar.arena.Team;
 import fr.topeka.sheepwar.commands.AbstractCommand;
-import fr.topeka.sheepwar.commands.Permission;
+import fr.topeka.sheepwar.commands.CommandDeclaration;
 
-public class CommmandAdminInfo extends AbstractCommand {
+@CommandDeclaration(
+		command = "INFO",
+		usage = "/sw arena info <arena_name>",
+		permission = "sheepwar.arena.info"
+		)
+public class CommandArenaInfo extends AbstractCommand {
 
-	public CommmandAdminInfo(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public CommandArenaInfo(SheepWar instance, Player player, String label, String[] args, int nArgs) {
 		super(instance, player, label, args, nArgs);
 	}
 
-	@Permission(_permission = "sheepwar.arena.info")
 	@Override
 	public boolean handle() {
 		if(nArgs > 2) {
@@ -44,11 +48,6 @@ public class CommmandAdminInfo extends AbstractCommand {
 			}
 		}
 		return false;
-	}
-
-	@Override
-	public void commandUsage() {
-		player.sendMessage("/sw arena info <arena_name>");	
 	}
 
 }

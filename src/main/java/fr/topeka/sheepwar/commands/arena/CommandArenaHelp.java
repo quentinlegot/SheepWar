@@ -7,8 +7,13 @@ import org.bukkit.entity.Player;
 
 import fr.topeka.sheepwar.SheepWar;
 import fr.topeka.sheepwar.commands.AbstractCommand;
-import fr.topeka.sheepwar.commands.Permission;
+import fr.topeka.sheepwar.commands.CommandDeclaration;
 
+@CommandDeclaration(
+		command = "HELP",
+		usage = "/sw arena help",
+		permission = "sheepwar.arena.help"
+		)
 public class CommandArenaHelp extends AbstractCommand {
 
 	
@@ -21,7 +26,6 @@ public class CommandArenaHelp extends AbstractCommand {
 		}
 	}
 
-	@Permission(_permission = "sheepwar.arena.help")
 	@Override
 	public boolean handle() {
 		int page = 1;
@@ -36,9 +40,5 @@ public class CommandArenaHelp extends AbstractCommand {
 		return true;
 	}
 
-	@Override
-	public void commandUsage() {
-		player.sendMessage("/sw arena help");
-	}
 
 }

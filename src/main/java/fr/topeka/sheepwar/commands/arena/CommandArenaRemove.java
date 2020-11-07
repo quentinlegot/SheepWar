@@ -4,15 +4,19 @@ import org.bukkit.entity.Player;
 
 import fr.topeka.sheepwar.SheepWar;
 import fr.topeka.sheepwar.commands.AbstractCommand;
-import fr.topeka.sheepwar.commands.Permission;
+import fr.topeka.sheepwar.commands.CommandDeclaration;
 
+@CommandDeclaration(
+		command = "REMOVE",
+		usage = "/sw arena remove <arena_name>",
+		permission = "sheepwar.arena.remove"
+		)
 public class CommandArenaRemove extends AbstractCommand {
 
 	public CommandArenaRemove(SheepWar instance, Player player, String label, String[] args, int nArgs) {
 		super(instance, player, label, args, nArgs);
 	}
 
-	@Permission(_permission = "sheepwar.arena.remove")
 	@Override
 	public boolean handle() {
 		if(nArgs > 2) {
@@ -26,12 +30,6 @@ public class CommandArenaRemove extends AbstractCommand {
 		}
 		player.sendMessage("No enough arguments");
 		return true;
-	}
-
-	@Override
-	public void commandUsage() {
-		player.sendMessage("/sw arena remove <arena_name>");
-		
 	}
 
 }
