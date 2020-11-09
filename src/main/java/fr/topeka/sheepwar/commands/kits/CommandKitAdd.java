@@ -36,11 +36,12 @@ public class CommandKitAdd extends AbstractCommand {
 				return false;
 			}
 			if(args[2].toUpperCase().equals("LEVEL")) {
-				// /sw kits add level <kit_name> 
+				// /sw kits add level <kit_name>
 				// copy sender inventory
 				Kit kit = _instance.kitList.get(args[3]);
 				if(kit != null) {
-					kit.addInventory(player.getInventory().getContents());
+					kit.addInventory(player.getInventory().getContents().clone());
+					player.sendMessage("Inventory added to kit " + kit.getName() + " as level " + (kit.numberOfLevel() - 1));
 					return true;
 				}
 				player.sendMessage("Kit doesn't exist");

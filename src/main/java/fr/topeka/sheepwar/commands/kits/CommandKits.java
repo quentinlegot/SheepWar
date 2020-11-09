@@ -27,6 +27,7 @@ public class CommandKits extends AbstractCommand {
 		registerCommand(CommandKitEdit.class);
 		registerCommand(CommandKitList.class);
 		registerCommand(CommandKitRemove.class);
+		registerCommand(CommandKitInfo.class);
 	}
 
 	@Override
