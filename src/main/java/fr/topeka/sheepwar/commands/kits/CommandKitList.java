@@ -1,11 +1,12 @@
 package fr.topeka.sheepwar.commands.kits;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.bukkit.entity.Player;
 
 import fr.topeka.sheepwar.SheepWar;
 import fr.topeka.sheepwar.commands.AbstractCommand;
 import fr.topeka.sheepwar.commands.CommandDeclaration;
-import fr.topeka.sheepwar.kits.Kit;
 
 @CommandDeclaration(
 		command = "LIST",
@@ -20,13 +21,10 @@ public class CommandKitList extends AbstractCommand {
 
 	@Override
 	public boolean handle() {
-		int i = 1;
-		for(Kit kit : _instance.kitList.values()) {
-			player.sendMessage(i + ":" + kit.getName() + ": " + kit.numberOfLevel());
-			i++;
-		}
-		player.sendMessage("Numbers of kits: " + i);
 		// list every kits and numbers of level
+		AtomicInteger i = new AtomicInteger();
+		_instance.kitList.values().forEach(kit -> player.sendMessage(i.incrementAndGet() + ": " + kit.getName() + ": " + kit.numberOfLevel()));
+		player.sendMessage("Numbers of kits: " + i.get());
 		return true;
 	}
 
