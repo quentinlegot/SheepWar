@@ -13,7 +13,7 @@ import fr.topeka.sheepwar.commands.CommandDeclaration;
 		)
 public class CommandArenaList extends AbstractCommand {
 
-	public CommandArenaList(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public CommandArenaList(SheepWar instance, Player player, String label, String[] args, Integer nArgs) {
 		super(instance, player, label, args, nArgs);
 	}
 

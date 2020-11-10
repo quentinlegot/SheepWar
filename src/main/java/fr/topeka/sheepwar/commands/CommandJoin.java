@@ -10,9 +10,8 @@ import fr.topeka.sheepwar.SheepWar;
 		permission = "sheepwar.join"
 		)
 public class CommandJoin extends AbstractCommand {
-
 	
-	public CommandJoin(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public CommandJoin(SheepWar instance, Player player, String label, String[] args, Integer nArgs) {
 		super(instance, player, label, args, nArgs);
 	}
 

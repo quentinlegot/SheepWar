@@ -14,7 +14,7 @@ import fr.topeka.sheepwar.kits.Kit;
 		)
 public class CommandKitAdd extends AbstractCommand {
 
-	public CommandKitAdd(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public CommandKitAdd(SheepWar instance, Player player, String label, String[] args, Integer nArgs) {
 		super(instance, player, label, args, nArgs);
 	}
 

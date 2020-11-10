@@ -20,7 +20,7 @@ public class CommandArena extends AbstractCommand {
 
 	private ArrayList<Triplet<Class<? extends AbstractCommand>, Constructor<? extends AbstractCommand>, CommandDeclaration>> commands;
 	
-	public CommandArena(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public CommandArena(SheepWar instance, Player player, String label, String[] args, Integer nArgs) {
 		super(instance, player, label, args, nArgs);
 		registerCommand(CommandArenaCreate.class);
 		registerCommand(CommandArenaList.class);

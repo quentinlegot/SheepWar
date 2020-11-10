@@ -19,7 +19,7 @@ public class CommandArenaHelp extends AbstractCommand {
 	
 	private static List<String[]> pages;
 	
-	public CommandArenaHelp(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public CommandArenaHelp(SheepWar instance, Player player, String label, String[] args, Integer nArgs) {
 		super(instance, player, label, args, nArgs);
 		if(pages == null) {
 			pages = new ArrayList<>();

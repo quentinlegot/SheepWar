@@ -17,7 +17,7 @@ import fr.topeka.sheepwar.commands.CommandDeclaration;
 		)
 public class CommandArenaSpawn extends AbstractCommand {
 
-	public CommandArenaSpawn(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public CommandArenaSpawn(SheepWar instance, Player player, String label, String[] args, Integer nArgs) {
 		super(instance, player, label, args, nArgs);
 	}
 
