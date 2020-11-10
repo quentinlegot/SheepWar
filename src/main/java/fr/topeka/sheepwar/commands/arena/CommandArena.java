@@ -18,34 +18,38 @@ import fr.topeka.sheepwar.commands.CommandHandler;
 		)
 public class CommandArena extends AbstractCommand {
 
-	private ArrayList<Triplet<Class<? extends AbstractCommand>, Constructor<? extends AbstractCommand>, CommandDeclaration>> commands;
+	private static ArrayList<Triplet<Class<? extends AbstractCommand>, Constructor<? extends AbstractCommand>, CommandDeclaration>> commands = new ArrayList<>();;
 	
 	public CommandArena(SheepWar instance, Player player, String label, String[] args, Integer nArgs) {
 		super(instance, player, label, args, nArgs);
-		registerCommand(CommandArenaCreate.class);
-		registerCommand(CommandArenaList.class);
-		registerCommand(CommandArenaHelp.class);
-		registerCommand(CommandArenaRemove.class);
-		registerCommand(CommandArenaSchem.class);
-		registerCommand(CommandArenaSpawn.class);
-		registerCommand(CommandArenaState.class);
-		registerCommand(CommandArenaState.class);
-		registerCommand(CommandArenaInfo.class);
+		if(commands.isEmpty()) {
+			registerCommand(CommandArenaCreate.class);
+			registerCommand(CommandArenaList.class);
+			registerCommand(CommandArenaHelp.class);
+			registerCommand(CommandArenaRemove.class);
+			registerCommand(CommandArenaSchem.class);
+			registerCommand(CommandArenaSpawn.class);
+			registerCommand(CommandArenaState.class);
+			registerCommand(CommandArenaState.class);
+			registerCommand(CommandArenaInfo.class);
+		}
+		
 	}
 
 	@Override
 	public boolean handle() {
-		AbstractCommand commandObj = null;
 		try {
 			if(nArgs > 1) {
 				String cmd = args[1].toUpperCase();
 				for(Triplet<Class<? extends AbstractCommand>, Constructor<? extends AbstractCommand>, CommandDeclaration> command1 : commands) {
 					String permission = command1.getValue2().permission();
 					if(IsGoodCommand(cmd, command1.getValue2()) && (permission == null || player.hasPermission(permission))) {
-						commandObj = command1.getValue1().newInstance(_instance, player, label, args, nArgs);
+						AbstractCommand commandObj = command1.getValue1().newInstance(_instance, player, label, args, nArgs);
 						if(!commandObj.handle()) {
-							player.sendMessage(command1.getValue2().usage());
-							player.sendMessage(command1.getValue2().description());
+							if(!command1.getValue2().usage().equals(""))
+								player.sendMessage(command1.getValue2().usage());
+							if(!(command1.getValue2().description().length == 1 && command1.getValue2().description()[0].equals("")))
+								player.sendMessage(command1.getValue2().description());
 						}
 						return true;
 					}
