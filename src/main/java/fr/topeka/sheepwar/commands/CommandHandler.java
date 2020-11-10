@@ -19,21 +19,22 @@ import fr.topeka.sheepwar.commands.kits.CommandKits;
 public class CommandHandler implements CommandExecutor, TabCompleter {
 
 	private SheepWar _instance;
-	private ArrayList<Triplet<Class<? extends AbstractCommand>, Constructor<? extends AbstractCommand>, CommandDeclaration>> commands = new ArrayList<>();
+	private static ArrayList<Triplet<Class<? extends AbstractCommand>, Constructor<? extends AbstractCommand>, CommandDeclaration>> commands = new ArrayList<>();
 
 
 	public CommandHandler(SheepWar instance) {
 		this._instance = instance;
-		registerCommand(CommandJoin.class);
-		registerCommand(CommandLeave.class);
-		registerCommand(CommandArena.class);
-		registerCommand(CommandKits.class);
+		if(commands.isEmpty()) {
+			registerCommand(CommandJoin.class);
+			registerCommand(CommandLeave.class);
+			registerCommand(CommandArena.class);
+			registerCommand(CommandKits.class);
+		}
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(sender instanceof Player) {
-			AbstractCommand commandObj = null;
 			Player player = (Player) sender;
 			int nArgs = args.length;
 			try {
@@ -42,10 +43,12 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 					for(Triplet<Class<? extends AbstractCommand>, Constructor<? extends AbstractCommand>, CommandDeclaration> command1 : commands) {
 						String permission = command1.getValue2().permission();
 						if(IsGoodCommand(cmd, command1.getValue2()) && (permission == null || player.hasPermission(permission))) {
-							commandObj = command1.getValue1().newInstance(_instance, player, label, args, nArgs);
+							AbstractCommand commandObj = command1.getValue1().newInstance(_instance, player, label, args, nArgs);
 							if(!commandObj.handle()) {
-								player.sendMessage(command1.getValue2().usage());
-								player.sendMessage(command1.getValue2().description());
+								if(!command1.getValue2().usage().equals(""))
+									player.sendMessage(command1.getValue2().usage());
+								if(!(command1.getValue2().description().length == 1 && command1.getValue2().description()[0].equals("")))
+									player.sendMessage(command1.getValue2().description());
 							}
 							return true;
 						}
