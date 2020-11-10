@@ -12,7 +12,7 @@ public abstract class AbstractCommand {
 	protected String[] args;
 	protected SheepWar _instance;
 	
-	public AbstractCommand(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public AbstractCommand(SheepWar instance, Player player, String label, String[] args, Integer nArgs) {
 		this._instance = instance;
 		this.player = player;
 		this.label = label;

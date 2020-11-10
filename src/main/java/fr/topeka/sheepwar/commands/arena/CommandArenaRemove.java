@@ -13,7 +13,7 @@ import fr.topeka.sheepwar.commands.CommandDeclaration;
 		)
 public class CommandArenaRemove extends AbstractCommand {
 
-	public CommandArenaRemove(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public CommandArenaRemove(SheepWar instance, Player player, String label, String[] args, Integer nArgs) {
 		super(instance, player, label, args, nArgs);
 	}
 

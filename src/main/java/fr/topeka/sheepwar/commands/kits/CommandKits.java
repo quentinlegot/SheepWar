@@ -21,7 +21,7 @@ public class CommandKits extends AbstractCommand {
 
 	private ArrayList<Triplet<Class<? extends AbstractCommand>, Constructor<? extends AbstractCommand>, CommandDeclaration>> commands;
 	
-	public CommandKits(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public CommandKits(SheepWar instance, Player player, String label, String[] args, Integer nArgs) {
 		super(instance, player, label, args, nArgs);
 		registerCommand(CommandKitAdd.class);
 		registerCommand(CommandKitEdit.class);

@@ -18,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 		)
 public class CommandKitInfo extends AbstractCommand {
 
-	public CommandKitInfo(SheepWar instance, Player player, String label, String[] args, int nArgs) {
+	public CommandKitInfo(SheepWar instance, Player player, String label, String[] args, Integer nArgs) {
 		super(instance, player, label, args, nArgs);
 	}
 
